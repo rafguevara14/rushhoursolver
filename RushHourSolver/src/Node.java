@@ -94,11 +94,17 @@ public class Node {
                     //add currCar to closed set
                     visitedCars.add(currCar);
 
-                    //determine orientation (constant to access element)
-//                    boolean isVertical = (this.matrix[i][j+1] == currCar);
+                   
 
                     //determine ROM
+                    int[] ROM = ROM(currCar,i,j,isVertical);
 
+                    //go through all moves given ROM
+                    for(int step = ROM[0]; step <= ROM[1]; step++){
+
+                        // makeMove(steps = i)
+
+                    }
 
 
 
