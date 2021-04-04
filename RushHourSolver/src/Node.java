@@ -6,14 +6,10 @@ public class Node {
     private int H;
     private int G;
     private int F;
-    fs
 
     Board board;
 
     private int[] ROM(String currCar,int x,int y,boolean isVertical) {dasmdsa
-
-//saoidhsakds/dsad
-//made a thing here
 
 //        0 O..P..
 //        1 O..P..
@@ -23,61 +19,54 @@ public class Node {
 //        5 ..RRRB
 
 
-        //[min,max,length]
-        int[] ROM = new int[3];
+        //[min,max]
+        int[] ROM = new int[2];
 
         int xtmp = x;
         int ytmp = y;
 
-        ROM[2] = 0;
 
-        //traverse negative to bottom of car
-        while(this.matrix[xtmp][ytmp] == currCar) {
+        //TODO:get to negative end of car-1 (negative_eoc)
 
-            ROM[2]++;
+        //start at negative end of car-1
+        if(isVertical)
 
-            if(isVertical)
-                ytmp++;
-            else
-                xtmp++;
+            ytmp = negative_eoc;
 
-        }
+        else
+            xtmp = negative_eoc;
 
-        //take away 'double dip'
-        ROM[2]--;
 
+        ROM[0] = 0;
 
         //determine negative ROM
         while(xtmp < 6 && ytmp < 6 && this.matrix[xtmp][ytmp] == ".") {
 
+            ROM[0]--;
 
         }
 
+        //TODO:get to positive end of car+1 (positive_eoc)
 
 
+       //start at positive end of car+1
+        if(isVertical)
 
-        //traverse positive to top of car
-        while(this.matrix[xtmp][ytmp] == currCar) {
+            ytmp = positive_eoc;
 
-            if (isVertical)
-                ytmp--;
-            else
-                xtmp--;
+        else
+            xtmp = positive_eoc;
+
+        ROM[1] = 0;
+
+        //determine positive ROM
+        while(xtmp < 6 && ytmp < 6 && this.matrix[xtmp][ytmp] == ".") {
+
+            ROM[1]++;
         }
 
 
-
-
-
-        xtmp = x;
-        ytmp = y;
-
-
-
-
-
-
-
+        return ROM;
 
     }
 
