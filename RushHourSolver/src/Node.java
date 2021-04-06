@@ -9,7 +9,7 @@ public class Node {
 
     Board board;
 
-    private int[] ROM(String currCar,int x,int y,boolean isVertical) {dasmdsa
+    private int[] ROM(String currCar,int x,int y,boolean isVertical) {
 
 //        0 O..P..
 //        1 O..P..
