@@ -8,7 +8,17 @@ public class Test {
 
         testboard.print_properties();
 
-//        System.out.println(5 == 5 ? 1 : 0 );
+
+
+
+        System.out.println("\n\n");
+
+        Board nextstate = new Board("X",2,testboard);
+
+
+        nextstate.print_matrix();
+
+        nextstate.print_properties();
 
 
     }

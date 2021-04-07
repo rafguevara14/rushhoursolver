@@ -3,13 +3,14 @@ import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Board {
 
     private String[][] matrix = new String[6][6];
 
-    private Map<String,int[]> properties = new HashMap<>();
+    private Map<String, int[]> properties = new HashMap<>();
 
 
     private final int LENGTH = 0;
@@ -19,21 +20,20 @@ public class Board {
 
     //testing methods
 
-    public void print_properties(){
+    public void print_properties() {
 
         properties.forEach((key, value) -> System.out.println(key + ":" + value[LENGTH] + ", " + value[ISVERT]));
-
 
 
     }
 
 
-    public void print_matrix(){
+    public void print_matrix() {
 
 
-        for(int i = 0; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
 
-            for(int j = 0; j <6; j++){
+            for (int j = 0; j < 6; j++) {
 
 //                System.out.print(i+  ","+ j + "   " + this.matrix[i][j]);
 
@@ -47,22 +47,43 @@ public class Board {
     }
 
 
-
-
-
     //methods
 
 
     //getters
-    public String getSquare(int x, int y){
+    public String getSquare(int x, int y) {
 
-        if(x > 6 || y > 6)
+        if (x > 6 || y > 6)
             throw new IllegalArgumentException("out of bounds");
 
         //matrix is inverted
         return this.matrix[y][x];
     }
 
+    public void setSquare(int x,int y,String value){
+        if (x > 6 || y > 6)
+            throw new IllegalArgumentException("out of bounds");
+
+        this.matrix[y][x] = value;
+
+    }
+
+
+
+
+    Board(String currCar,int steps,Board oldBoard){
+
+        //shallow copy ('global' throughout the entire algorithm)
+        this.properties = oldBoard.properties;
+
+        //copy Matrix
+        makeMove(currCar,steps,oldBoard);
+
+
+    }
+
+
+    //reads from file
     Board(String inputpath) throws FileAlreadyExistsException, FileNotFoundException {
 
         //creates the board
@@ -71,20 +92,20 @@ public class Board {
         Scanner scanner = new Scanner(file);
 
 
-        if(!file.exists())
+        if (!file.exists())
             throw new FileAlreadyExistsException("Could not find file: " + inputpath);
 
         //iterate through file and store elements in 2D matrix
 
         String row;
 
-        while(scanner.hasNext()){
+        while (scanner.hasNext()) {
 
-            for(int i = 0; i < 6; i++){
+            for (int i = 0; i < 6; i++) {
 
                 row = scanner.next();
 
-                for(int j = 0; j < 6; j++){
+                for (int j = 0; j < 6; j++) {
 
                     this.matrix[i][j] = String.valueOf(row.charAt(j));
 
@@ -103,48 +124,47 @@ public class Board {
 
         //scan through entire inverted matrix
 
-        for(int i = 0; i < 6; i++){
+        for (int i = 0; i < 6; i++) {
 
-            for(int j = 0; j < 6; j++){
+            for (int j = 0; j < 6; j++) {
 
                 int[] tmp_properties = new int[2];
 
                 //push car onto properties
 
-                if(!properties.containsKey(getSquare(i,j)) && !getSquare(i,j).equals(".")) {
+                if (!properties.containsKey(getSquare(i, j)) && !getSquare(i, j).equals(".")) {
 //                    properties.put(this.matrix[i][j],tmp_properties);
 
 
                     //check vertical
 
-                    if(j == 5)
+                    if (j == 5)
 
                         tmp_properties[ISVERT] = 0;
 
-                    else if(i == 5)
+                    else if (i == 5)
 
                         tmp_properties[ISVERT] = 1;
 
                     else //check vertical
-                        tmp_properties[ISVERT] = ((getSquare(i,j+1).equals(getSquare(i,j))) ? 1 : 0);
-
+                        tmp_properties[ISVERT] = ((getSquare(i, j + 1).equals(getSquare(i, j))) ? 1 : 0);
 
 
                     //determine length
 
-                    String carName = getSquare(i,j);
+                    String carName = getSquare(i, j);
 
                     int ipos = i;
 
                     int jpos = j;
 
                     //positive end of car
-                    while(ipos < 6 && jpos < 6){
+                    while (ipos < 6 && jpos < 6) {
 
-                        if(!getSquare(ipos,jpos).equals(carName))
+                        if (!getSquare(ipos, jpos).equals(carName))
                             break;
 
-                        if(tmp_properties[ISVERT] == 0)
+                        if (tmp_properties[ISVERT] == 0)
                             ipos++;
                         else
                             jpos++;
@@ -153,11 +173,10 @@ public class Board {
                     }
 
                     //step back to end of car
-                    if(tmp_properties[ISVERT] == 0)
+                    if (tmp_properties[ISVERT] == 0)
                         ipos--;
                     else
                         jpos--;
-
 
 
                     int ineg = i;
@@ -165,35 +184,35 @@ public class Board {
                     int jneg = j;
 
                     //negative end of car
-                    while(ineg >= 0 && jneg >= 0){
+                    while (ineg >= 0 && jneg >= 0) {
 
-                        if(!getSquare(ineg,jneg).equals(carName))
+                        if (!getSquare(ineg, jneg).equals(carName))
                             break;
 
 
-                        if(tmp_properties[ISVERT] == 0)
+                        if (tmp_properties[ISVERT] == 0)
                             ineg--;
                         else
                             jneg--;
                     }
 
                     //step back to end of car
-                    if(tmp_properties[ISVERT] == 0)
+                    if (tmp_properties[ISVERT] == 0)
                         ineg++;
                     else
                         jneg++;
 
                     //horizontal
-                    if(tmp_properties[ISVERT] == 0){
+                    if (tmp_properties[ISVERT] == 0) {
 
                         tmp_properties[LENGTH] = (ipos - ineg) + 1;
-                    }else
+                    } else
                         tmp_properties[LENGTH] = (jpos - jneg) + 1;
 
 
                     //finally, push car onto properties array
 
-                    properties.put(getSquare(i,j),tmp_properties);
+                    properties.put(getSquare(i, j), tmp_properties);
 
                 }
 
@@ -203,14 +222,83 @@ public class Board {
         }//outer loop
 
     }
+    
+    //    checks if board is solved
+    public boolean isSolved() {
+        return (getSquare(2,5).equals("X") ) && (getSquare(2,4).equals("X"));
+    }
 
-    //checks if X car in solved spot
-    public boolean isSolved();
 
-    public String[][] makeMove(String currCar,int steps);
+    private int[] initCoordinates(String carName){
 
-    public String[][] copyMatrix();
+        int[] coord = new int[2];
 
-//
+        for(int x = 0; x < 6; x++){
 
-}
+            for(int y = 0; y < 6; y++) {
+
+                if (getSquare(x, y).equals(carName)){
+
+                    coord[0] = x;
+                    coord[1] = y;
+
+                    return coord;
+
+                }
+
+            }//inner for loop
+
+
+        }
+        throw new NoSuchElementException("Could not find Car in matrix");
+
+    }
+
+
+
+    //    returns a matrix with currCar moved steps steps. negative steps moves left or down. pos moves right or up
+    private void makeMove(String currCar,int steps,Board oldBoard){
+        copyMatrix(oldBoard.matrix);
+        int[] propertyArr = this.properties.get(currCar);
+
+        int carLength = propertyArr[0]; //for readability. doesn't have to be declared as variable. change later
+        int carOrientation = propertyArr[1]; //for readability. doesn't have to be declared as variable. change later
+
+        int[] initCoordinates = initCoordinates(currCar);
+
+
+
+//        if car moves horizontally
+        if (carOrientation == 0){
+            for (int i=0; i< carLength; i++) {
+                setSquare(initCoordinates[0] + steps + i,initCoordinates[1],currCar);
+                setSquare(initCoordinates[0] + i,initCoordinates[1],".");
+            }
+        }
+
+
+//         if car moves vertically
+        if (carOrientation == 1){
+            for (int j=0; j< carLength; j++) {
+                setSquare(initCoordinates[0],initCoordinates[1] + steps + j,currCar);
+                setSquare(initCoordinates[0],initCoordinates[1] + j,".");
+            }
+        }
+    }
+
+
+    //    receives a matrix and returns a duplicate of it
+    private void copyMatrix(String[][] oldMatrix) {
+        this.matrix = new String[6][6];
+        for (int i=0; i<6; i++){
+            for (int j=0; j<6; j++)
+                this.matrix[i][j]=oldMatrix[i][j];
+        }
+    }
+
+
+
+
+
+}//Board class
+
