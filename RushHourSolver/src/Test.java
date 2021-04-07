@@ -8,6 +8,9 @@ public class Test {
 
         testboard.print_properties();
 
+//        System.out.println(5 == 5 ? 1 : 0 );
+
+
     }
 
 

@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,6 +35,8 @@ public class Board {
 
             for(int j = 0; j <6; j++){
 
+//                System.out.print(i+  ","+ j + "   " + this.matrix[i][j]);
+
                 System.out.print(this.matrix[i][j]);
 
             }
@@ -49,8 +52,18 @@ public class Board {
 
     //methods
 
-    //sets matrix
-    Board(String inputpath) throws FileAlreadyExistsException {
+
+    //getters
+    public String getSquare(int x, int y){
+
+        if(x > 6 || y > 6)
+            throw new IllegalArgumentException("out of bounds");
+
+        //matrix is inverted
+        return this.matrix[y][x];
+    }
+
+    Board(String inputpath) throws FileAlreadyExistsException, FileNotFoundException {
 
         //creates the board
         File file = new File(inputpath);
@@ -82,11 +95,13 @@ public class Board {
 
         }//file iteration
 
+        // System.out.println("Matrix \n\n\n");
+        // System.out.println(this.matrix[0][1]);
 
 //        int[] tmp_properties = new int[2];
 
 
-        //scan through entire matrix
+        //scan through entire inverted matrix
 
         for(int i = 0; i < 6; i++){
 
@@ -96,40 +111,38 @@ public class Board {
 
                 //push car onto properties
 
-                if(!properties.containsKey(this.matrix[i][j]) && !this.matrix[i][j].equals(".")) {
+                if(!properties.containsKey(getSquare(i,j)) && !getSquare(i,j).equals(".")) {
 //                    properties.put(this.matrix[i][j],tmp_properties);
-
-
-                    //edge cases
-
-                    //determine orientation
-
-                    //check a direction that is within board
-                    int pivot = 1;
-
-                    //at edge of board, pivot to check negative direction instead
-                    if (j == 5)
-                        pivot *= -1;
-                    if (i == 5)
-                        pivot *= -1;
 
 
                     //check vertical
 
-                    tmp_properties[ISVERT] = (this.matrix[i][j + pivot].equals(this.matrix[i][j])) ? 1 : 0;
+                    if(j == 5)
+
+                        tmp_properties[ISVERT] = 0;
+
+                    else if(i == 5)
+
+                        tmp_properties[ISVERT] = 1;
+
+                    else //check vertical
+                        tmp_properties[ISVERT] = ((getSquare(i,j+1).equals(getSquare(i,j))) ? 1 : 0);
 
 
 
                     //determine length
 
-                    String carName = this.matrix[i][j];
+                    String carName = getSquare(i,j);
 
                     int ipos = i;
 
                     int jpos = j;
 
                     //positive end of car
-                    while(this.matrix[ipos][jpos] == carName){
+                    while(ipos < 6 && jpos < 6){
+
+                        if(!getSquare(ipos,jpos).equals(carName))
+                            break;
 
                         if(tmp_properties[ISVERT] == 0)
                             ipos++;
@@ -139,18 +152,36 @@ public class Board {
 
                     }
 
+                    //step back to end of car
+                    if(tmp_properties[ISVERT] == 0)
+                        ipos--;
+                    else
+                        jpos--;
+
+
+
                     int ineg = i;
 
                     int jneg = j;
 
                     //negative end of car
-                    while(this.matrix[ineg][jneg] == carName){
+                    while(ineg >= 0 && jneg >= 0){
+
+                        if(!getSquare(ineg,jneg).equals(carName))
+                            break;
+
 
                         if(tmp_properties[ISVERT] == 0)
                             ineg--;
                         else
                             jneg--;
                     }
+
+                    //step back to end of car
+                    if(tmp_properties[ISVERT] == 0)
+                        ineg++;
+                    else
+                        jneg++;
 
                     //horizontal
                     if(tmp_properties[ISVERT] == 0){
@@ -162,9 +193,7 @@ public class Board {
 
                     //finally, push car onto properties array
 
-                    properties.put(this.matrix[i][j],tmp_properties);
-
-
+                    properties.put(getSquare(i,j),tmp_properties);
 
                 }
 
@@ -173,26 +202,6 @@ public class Board {
 
         }//outer loop
 
-
-
-
-
-        //gets length of every car
-
-
-
-
-        //gets orientation
-
-    }
-
-    //getters
-    public String getSquare(int x, int y){
-
-        if(x > 6 || y > 6)
-            throw new IllegalArgumentException("out of bounds");
-
-        return this.matrix[x][y];
     }
 
     //checks if X car in solved spot
