@@ -15,6 +15,38 @@ public class Board {
 
     private final int ISVERT = 1; //1 is vertical
 
+
+    //testing methods
+
+    public void print_properties(){
+
+        properties.forEach((key, value) -> System.out.println(key + ":" + value[LENGTH] + ", " + value[ISVERT]));
+
+
+
+    }
+
+
+    public void print_matrix(){
+
+
+        for(int i = 0; i < 6; i++){
+
+            for(int j = 0; j <6; j++){
+
+                System.out.print(this.matrix[i][j]);
+
+            }
+
+            System.out.println();
+        }
+
+    }
+
+
+
+
+
     //methods
 
     //sets matrix
