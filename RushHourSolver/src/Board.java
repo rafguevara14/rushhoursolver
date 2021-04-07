@@ -205,16 +205,12 @@ public class Board {
     }
 
     //checks if X car in solved spot
-//    public boolean isSolved();
+    public boolean isSolved();
 
-//    public String[][] makeMove(String currCar,int steps);
+    public String[][] makeMove(String currCar,int steps);
 
-//    public String[][] copyMatrix();
+    public String[][] copyMatrix();
 
 //
-
-    public static void main(String[] args) {
-        //Write your code here
-    }
 
 }
