@@ -1,43 +1,46 @@
-//import java.util.ArrayList;
+import java.util.ArrayList;
+
+public class Node {
+
+    private ArrayList<String> visitedCars; //closed set
+    private int H;
+    private int G;
+    private int F;
+
+    Board board;
+
+    private int[] ROM(String currCar, int x, int y) {
+
+//        0 O..P..
+//        1 O..P..
+//        2 OXXP..
+//        3 ..AQQQ
+//        4 ..A..B
+//        5 ..RRRB
+
+//        public final int LENGTH = 0;
+
+//        public final int ISVERT = 1; //1 is vertical
+
+        //[min,max]
+        int[] ROM = new int[2];
 //
-//public class Node {
-//
-//    private ArrayList<String> visitedCars; //closed set
-//    private int H;
-//    private int G;
-//    private int F;
-//
-//    Board board;
-//
-//    private int[] ROM(String currCar,int x,int y,boolean isVertical) {
-//
-////        0 O..P..
-////        1 O..P..
-////        2 OXXP..
-////        3 ..AQQQ
-////        4 ..A..B
-////        5 ..RRRB
-//
-//
-//        //[min,max]
-//        int[] ROM = new int[2];
-//
-//        int xtmp = x;
-//        int ytmp = y;
-//
-//
-//        //TODO:get to negative end of car-1 (negative_eoc)
-//
-//        //start at negative end of car-1
-//        if(isVertical)
-//
-//            ytmp = negative_eoc;
-//
-//        else
-//            xtmp = negative_eoc;
+        int xtmp = x;
+        int ytmp = y;
 //
 //
-//        ROM[0] = 0;
+        //TODO:get to negative end of car-1 (negative_eoc)
+
+        //start at negative end of car-1
+        if(board.getProperty(currCar, board.LENGTH) == )
+
+            ytmp = negative_eoc;
+
+        else
+            xtmp = negative_eoc;
+
+
+        ROM[0] = 0;
 //
 //        //determine negative ROM
 //        while(xtmp < 6 && ytmp < 6 && this.matrix[xtmp][ytmp] == ".") {
@@ -67,28 +70,47 @@
 //
 //
 //        return ROM;
-//
-//    }
-//
-//
-//    public ArrayList<Node> generateNeighbours(){
-//
-//
-//        ArrayList<Node> neighbours;
+
+    }
+
+    //return all possible neighbours as an ArrayList of Nodes
+    public ArrayList<Node> generateNeighbours() {
+
+
+        ArrayList<Node> neighbours;
 //
 //        //go through entire board looking for NEW cars
 //
-//        for(int i = 0; i < 6; i++) {
+        for(int i = 0; i < 6; i++) {
 //
-//            for (int j = 0; j < 6; j++) {
+            for (int j = 0; j < 6; j++) {
 //
 //                //scan through till find a car
-//                if(this.matrix[i][j] == ".")
+                if(this.board.getSquare(i,j) != "."){
 //
-//                    continue;
+
 //
-//                String currCar = this.matrix[i][j];
+                    String currCar = this.board.getSquare(i,j);
 //
+                    if(!visitedCars.contains(currCar)){
+
+                        //mark as visited
+                        visitedCars.add(currCar);
+
+                        //determine ROM
+                        int[] ROM = ROM
+
+
+                        //go through all moves for that car
+
+
+
+
+
+
+                    }//new car
+
+
 //                if(!visitedCars.contains(currCar)) {
 //
 //                    //add currCar to closed set
@@ -105,49 +127,23 @@
 //                        // makeMove(steps = i)
 //
 //                    }
+                } //found a car
 //
 //
+
+            }//j
+        }//i
+
+
+        //set currCar to visited
+        //determine orientation
+
+
+        //determine ROM interval [a,b] (how??)
+
+        //apply makeMove to the car with each step in RO
+
+    }
 //
-//                }//per car
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//            }//j
-//
-//
-//        }//i
-//
-//
-//
-//        //set currCar to visited
-//        //determine orientation
-//
-//
-//
-//
-//        //determine ROM interval [a,b] (how??)
-//
-//        //apply makeMove to the car with each step in ROM
-//
-//
-//
-//
-//    }
-//
-//
-//
-//
-//}
-//
-//}
-//
+
+}//Node

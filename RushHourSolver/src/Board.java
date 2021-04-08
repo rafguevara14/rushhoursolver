@@ -13,9 +13,9 @@ public class Board {
     private Map<String, int[]> properties = new HashMap<>();
 
 
-    private final int LENGTH = 0;
+    public final int LENGTH = 0;
 
-    private final int ISVERT = 1; //1 is vertical
+    public final int ISVERT = 1; //1 is vertical
 
 
     //testing methods
@@ -50,6 +50,7 @@ public class Board {
     //methods
 
 
+
     //getters
     public String getSquare(int x, int y) {
 
@@ -60,6 +61,34 @@ public class Board {
         return this.matrix[y][x];
     }
 
+    public int getProperty(String key, int property){
+
+        if(property != LENGTH && property != ISVERT)
+            throw new NoSuchElementException("The given property does not exist\n");
+
+
+        return this.properties.get(key)[property];
+
+    }
+
+    public int getLength(String key){
+
+        if(this.properties.containsKey(key))
+            throw new NoSuchElementException("That car does not exist within properties array\n");
+        
+        return this.properties.get(key)[LENGTH];
+
+    }
+
+    public boolean isVertical(String key){
+
+        if(this.properties.containsKey(key))
+            throw new NoSuchElementException("That car does not exist within properties array\n");
+
+        return (this.properties.get(key)[ISVERT] == ISVERT);
+    }
+
+    //setters
     public void setSquare(int x,int y,String value){
         if (x > 6 || y > 6)
             throw new IllegalArgumentException("out of bounds");
@@ -222,7 +251,7 @@ public class Board {
         }//outer loop
 
     }
-    
+
     //    checks if board is solved
     public boolean isSolved() {
         return (getSquare(2,5).equals("X") ) && (getSquare(2,4).equals("X"));
