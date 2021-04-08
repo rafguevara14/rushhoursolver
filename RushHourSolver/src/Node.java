@@ -59,62 +59,95 @@ public class Node {
 //        4 ..A..B
 //        5 ..RRRB
 
-//        public final int LENGTH = 0;
-
-//        public final int ISVERT = 1; //1 is vertical
-
         //[min,max]
         int[] ROM = new int[2];
-//
+
         int xtmp = x;
+
         int ytmp = y;
-//
-//
-        //TODO:get to negative end of car-1 (negative_eoc)
 
-        //start at negative end of car-1 (top/left of car)
-
-        if(this.board.isVertical(currCar))
+        //get to negative end of car (top/left of car)
+        if(this.board.isVertical(currCar)){
 
             //travel up till first empty square
-        {
-            while(this.board.getSquare(xtmp,ytmp).equals(currCar)){
+            while(this.board.isSameCar(currCar,xtmp,ytmp))
                 ytmp--;
-            }
-        }
-        else
+
+            //step back to get to car
+            ytmp++;
+
+        }else{
+
             //travel left till first empty square
-        {
-            while(this.board.getSquare(xtmp,ytmp).equals(currCar)){
+            while(this.board.isSameCar(currCar,xtmp,ytmp))
                 xtmp--;
-            }
+
+            //step back to get to car (avoids out of bounds exception)
+            xtmp++;
         }
 
-        ROM[0] = 0;
+        //Range of motion does not begin till after the first empty square
+        ROM[0] = 1;
 
         //determine negative ROM
-        while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."))
+        do{
 
             ROM[0]--;
 
-        //start at negative end of car-1 (bottom/right of car)
-        if(this.board.isVertical(currCar))
+            if(this.board.isVertical(currCar))
+                ytmp--;
+            else
+                xtmp--;
+
+            //edge case
+            if(!this.board.inBounds(currCar,xtmp,ytmp))
+                break;
+
+        }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
+
+
+        //reset coordinates
+        xtmp = x;
+
+        ytmp = y;
+
+        //start at positive end of car (bottom/right of car)
+        if(this.board.isVertical(currCar)) {
 
             //travel down till first empty square
-            while(this.board.getSquare(xtmp,ytmp).equals(currCar))
+            while(this.board.isSameCar(currCar,xtmp,ytmp))
                 ytmp++;
-        else
+
+            //step back to get to car
+            ytmp--;
+
+        }else{
             //travel right till first empty square
-            while(this.board.getSquare(xtmp,ytmp).equals(currCar))
+            while(this.board.isSameCar(currCar,xtmp,ytmp))
                 xtmp++;
 
-        //TODO:get to positive end of car+1 (positive_eoc)
+            //step back to get to car
+            xtmp--;
+        }
 
-        ROM[1] = 0;
+        //Range of motion does not begin till after the first empty square
+        ROM[1] = -1;
 
         //determine positive ROM
-        while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."))
+        do{
+
             ROM[1]++;
+
+            if(this.board.isVertical(currCar))
+                ytmp++;
+            else
+                xtmp++;
+
+            //edge case
+            if(!this.board.inBounds(currCar,xtmp,ytmp))
+                break;
+
+        }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
 
         return ROM;
 

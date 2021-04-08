@@ -10,7 +10,7 @@ public class Board {
 
     private String[][] matrix = new String[6][6];
 
-    private Map<String, int[]> properties = new HashMap<>();
+    private static Map<String, int[]> properties = new HashMap<>();
 
 
     public final int LENGTH = 0;
@@ -54,44 +54,53 @@ public class Board {
     //getters
     public String getSquare(int x, int y) {
 
-        if (x > 6 || y > 6 || x < 0 || y < 0)
+        if (x >= 6 || y >= 6 || x < 0 || y < 0)
             throw new IllegalArgumentException("out of bounds");
 
         //matrix is inverted
         return this.matrix[y][x];
     }
 
+    public boolean isSameCar(String currCar, int x, int y){
+
+        if (x >= 6 || y >= 6 || x < 0 || y < 0)
+            return false;
+
+        if(!properties.containsKey(currCar))
+            throw new NoSuchElementException("That car does not exist in the board\n");
+
+        return getSquare(x,y).equals(currCar);
+    }
+
     public boolean inBounds(String currCar,int x,int y){
 
-        return getSquare(x,y) == currCar;
-        
+        return (x <= 5 && y <= 5 && x >= 0 && y >= 0);
     }
+
 
     public int getProperty(String key, int property){
 
         if(property != LENGTH && property != ISVERT)
             throw new NoSuchElementException("The given property does not exist\n");
-
-
-        return this.properties.get(key)[property];
+        return properties.get(key)[property];
 
     }
 
     public int getLength(String key){
 
-        if(!this.properties.containsKey(key))
+        if(!properties.containsKey(key))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
-        return this.properties.get(key)[LENGTH];
+        return properties.get(key)[LENGTH];
 
     }
 
     public boolean isVertical(String key){
 
-        if(!this.properties.containsKey(key))
+        if(!properties.containsKey(key))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
-        return (this.properties.get(key)[ISVERT] == ISVERT);
+        return (properties.get(key)[ISVERT] == ISVERT);
     }
 
     //setters
@@ -105,13 +114,8 @@ public class Board {
 
     Board(String currCar,int steps,Board oldBoard){
 
-        //shallow copy ('global' throughout the entire algorithm)
-        this.properties = oldBoard.properties;
-
         //copy Matrix
         makeMove(currCar,steps,oldBoard);
-
-
     }
 
 
@@ -291,7 +295,7 @@ public class Board {
     //    returns a matrix with currCar moved steps steps. negative steps moves left or down. pos moves right or up
     private void makeMove(String currCar,int steps,Board oldBoard){
         copyMatrix(oldBoard.matrix);
-        int[] propertyArr = this.properties.get(currCar);
+        int[] propertyArr = properties.get(currCar);
 
         int carLength = propertyArr[0]; //for readability. doesn't have to be declared as variable. change later
         int carOrientation = propertyArr[1]; //for readability. doesn't have to be declared as variable. change later
