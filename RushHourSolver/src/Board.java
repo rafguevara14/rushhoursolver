@@ -54,11 +54,17 @@ public class Board {
     //getters
     public String getSquare(int x, int y) {
 
-        if (x > 6 || y > 6)
+        if (x > 6 || y > 6 || x < 0 || y < 0)
             throw new IllegalArgumentException("out of bounds");
 
         //matrix is inverted
         return this.matrix[y][x];
+    }
+
+    public boolean inBounds(String currCar,int x,int y){
+
+        return getSquare(x,y) == currCar;
+        
     }
 
     public int getProperty(String key, int property){
@@ -73,7 +79,7 @@ public class Board {
 
     public int getLength(String key){
 
-        if(this.properties.containsKey(key))
+        if(!this.properties.containsKey(key))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
         return this.properties.get(key)[LENGTH];
@@ -82,7 +88,7 @@ public class Board {
 
     public boolean isVertical(String key){
 
-        if(this.properties.containsKey(key))
+        if(!this.properties.containsKey(key))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
         return (this.properties.get(key)[ISVERT] == ISVERT);
@@ -96,9 +102,6 @@ public class Board {
         this.matrix[y][x] = value;
 
     }
-
-
-
 
     Board(String currCar,int steps,Board oldBoard){
 

@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+import java.nio.file.FileAlreadyExistsException;
 import java.util.ArrayList;
 
 public class Node {
@@ -9,7 +11,43 @@ public class Node {
 
     Board board;
 
-    Node
+
+    Node(){
+
+        this.board = null;
+
+        this.H = 0;
+
+        this.G = 0;
+
+        this.F = 0;
+
+    }
+
+    //creates a new Node from old board with one move executed
+    Node(String currCar, int steps,Board oldBoard){
+
+        //create new Board
+        this.board = new Board(currCar,steps,oldBoard);
+
+        //update H
+
+        //update G
+
+        //update F
+
+    }
+
+    public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
+
+        this.board = new Board(file);
+
+        int ROM[] = ROM(currCar,x,y);
+
+        System.out.println("ROM of " + currCar + " is [" + ROM[0] + "," + ROM[1] + "]\n");
+
+
+    }
 
 
     private int[] ROM(String currCar, int x, int y) {
@@ -40,14 +78,14 @@ public class Node {
 
             //travel up till first empty square
         {
-            while(this.board.getSquare(xtmp,ytmp) == currCar) {
+            while(this.board.getSquare(xtmp,ytmp).equals(currCar)){
                 ytmp--;
             }
         }
         else
             //travel left till first empty square
         {
-            while(this.board.getSquare(xtmp,ytmp) == currCar) {
+            while(this.board.getSquare(xtmp,ytmp).equals(currCar)){
                 xtmp--;
             }
         }
@@ -63,11 +101,11 @@ public class Node {
         if(this.board.isVertical(currCar))
 
             //travel down till first empty square
-            while(this.board.getSquare(xtmp,ytmp) == currCar)
+            while(this.board.getSquare(xtmp,ytmp).equals(currCar))
                 ytmp++;
         else
             //travel right till first empty square
-            while(this.board.getSquare(xtmp,ytmp) == currCar)
+            while(this.board.getSquare(xtmp,ytmp).equals(currCar))
                 xtmp++;
 
         //TODO:get to positive end of car+1 (positive_eoc)
@@ -85,75 +123,38 @@ public class Node {
     //return all possible neighbours as an ArrayList of Nodes
     public ArrayList<Node> generateNeighbours() {
 
+        ArrayList<Node> neighbours = null;
 
-        ArrayList<Node> neighbours;
-//
-//        //go through entire board looking for NEW cars
-//
-        for(int i = 0; i < 6; i++) {
-//
+        //go through entire board looking for NEW cars
+        for (int i = 0; i < 6; i++) {
             for (int j = 0; j < 6; j++) {
-//
-//                //scan through till find a car
-                if(this.board.getSquare(i,j) != "."){
-//
 
-//
-                    String currCar = this.board.getSquare(i,j);
-//
-                    if(!visitedCars.contains(currCar)){
+                //found a car
+                if (!this.board.getSquare(i, j).equals(".")){
+
+                    String currCar = this.board.getSquare(i, j);
+
+                    //found a NEW car
+                    if (!visitedCars.contains(currCar)) {
 
                         //mark as visited
                         visitedCars.add(currCar);
 
                         //determine ROM
-                        int[] ROM = ROM(currCar,i,j);
+                        int[] ROM = ROM(currCar, i, j);
 
                         //go through all moves for that car and generate a neighbour
+                        for (int step = ROM[0]; step <= ROM[1]; step++)
 
-                        for(int step = ROM[0]; step <= ROM[1]; step++){
-
-
-
-
-
-
-
-                        }
-
-
-
-
-
-
+                            neighbours.add(new Node(currCar, step, this.board));
 
                     }//new car
-
-
-//                if(!visitedCars.contains(currCar)) {
-//
-//                    //add currCar to closed set
-//                    visitedCars.add(currCar);
-//
-//
-//
-//                    //determine ROM
-//                    int[] ROM = ROM(currCar,i,j,isVertical);
-//
-//                    //go through all moves given ROM
-//                    for(int step = ROM[0]; step <= ROM[1]; step++){
-//
-//                        // makeMove(steps = i)
-//
-//                    }
-                } //found a car
-//
-//
-
+                }//car found
             }//j
-        }//i
+        }//i (main for loop)
 
-    }
-//
+        return neighbours;
+
+    }//generate neighbours function
 
 }//Node

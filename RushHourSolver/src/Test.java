@@ -2,13 +2,20 @@ public class Test {
 
     public static void main(String[] args) throws Exception {
 
+
+        Node test = new Node();
+
+        test.ROMtest("A",0,0,"A00.txt");
+
+
+
 //        Board testboard = new Board("A00.txt");
 //
 //        testboard.print_matrix();
 //
 //        testboard.print_properties();
 //
-            System? 1 : 0);//
+//
 //
 //        System.out.println("\n\n");
 //
@@ -25,3 +32,4 @@ public class Test {
 
 
 }
+;
