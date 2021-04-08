@@ -9,6 +9,9 @@ public class Node {
 
     Board board;
 
+    Node
+
+
     private int[] ROM(String currCar, int x, int y) {
 
 //        0 O..P..
@@ -31,45 +34,51 @@ public class Node {
 //
         //TODO:get to negative end of car-1 (negative_eoc)
 
-        //start at negative end of car-1
-        if(board.getProperty(currCar, board.LENGTH) == )
+        //start at negative end of car-1 (top/left of car)
 
-            ytmp = negative_eoc;
+        if(this.board.isVertical(currCar))
 
+            //travel up till first empty square
+        {
+            while(this.board.getSquare(xtmp,ytmp) == currCar) {
+                ytmp--;
+            }
+        }
         else
-            xtmp = negative_eoc;
-
+            //travel left till first empty square
+        {
+            while(this.board.getSquare(xtmp,ytmp) == currCar) {
+                xtmp--;
+            }
+        }
 
         ROM[0] = 0;
-//
-//        //determine negative ROM
-//        while(xtmp < 6 && ytmp < 6 && this.matrix[xtmp][ytmp] == ".") {
-//
-//            ROM[0]--;
-//
-//        }
-//
-//        //TODO:get to positive end of car+1 (positive_eoc)
-//
-//
-//       //start at positive end of car+1
-//        if(isVertical)
-//
-//            ytmp = positive_eoc;
-//
-//        else
-//            xtmp = positive_eoc;
-//
-//        ROM[1] = 0;
-//
-//        //determine positive ROM
-//        while(xtmp < 6 && ytmp < 6 && this.matrix[xtmp][ytmp] == ".") {
-//
-//            ROM[1]++;
-//        }
-//
-//
-//        return ROM;
+
+        //determine negative ROM
+        while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."))
+
+            ROM[0]--;
+
+        //start at negative end of car-1 (bottom/right of car)
+        if(this.board.isVertical(currCar))
+
+            //travel down till first empty square
+            while(this.board.getSquare(xtmp,ytmp) == currCar)
+                ytmp++;
+        else
+            //travel right till first empty square
+            while(this.board.getSquare(xtmp,ytmp) == currCar)
+                xtmp++;
+
+        //TODO:get to positive end of car+1 (positive_eoc)
+
+        ROM[1] = 0;
+
+        //determine positive ROM
+        while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."))
+            ROM[1]++;
+
+        return ROM;
 
     }
 
@@ -98,10 +107,20 @@ public class Node {
                         visitedCars.add(currCar);
 
                         //determine ROM
-                        int[] ROM = ROM
+                        int[] ROM = ROM(currCar,i,j);
+
+                        //go through all moves for that car and generate a neighbour
+
+                        for(int step = ROM[0]; step <= ROM[1]; step++){
 
 
-                        //go through all moves for that car
+
+
+
+
+
+                        }
+
 
 
 
@@ -133,15 +152,6 @@ public class Node {
 
             }//j
         }//i
-
-
-        //set currCar to visited
-        //determine orientation
-
-
-        //determine ROM interval [a,b] (how??)
-
-        //apply makeMove to the car with each step in RO
 
     }
 //

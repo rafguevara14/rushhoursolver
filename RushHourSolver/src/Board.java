@@ -75,7 +75,7 @@ public class Board {
 
         if(this.properties.containsKey(key))
             throw new NoSuchElementException("That car does not exist within properties array\n");
-        
+
         return this.properties.get(key)[LENGTH];
 
     }
