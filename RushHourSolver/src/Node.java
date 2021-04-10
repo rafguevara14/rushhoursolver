@@ -11,7 +11,6 @@ public class Node {
 
     Board board;
 
-
     Node(){
 
         this.board = null;
@@ -50,10 +49,10 @@ public class Node {
     }
 
 
-    public void generate_neighbourstest(){
+    public void generate_neighbours_test(){
 
 
-        ArrayList<Node> neighbours
+//        ArrayList<Node> neighbours
 
 
     }
@@ -72,29 +71,11 @@ public class Node {
         //[min,max]
         int[] ROM = new int[2];
 
+
+        //leftmost/upmost coordinate of car
         int xtmp = x;
 
         int ytmp = y;
-
-        //get to negative end of car (top/left of car)
-        if(this.board.isVertical(currCar)){
-
-            //travel up till first empty square
-            while(this.board.isSameCar(currCar,xtmp,ytmp))
-                ytmp--;
-
-            //step back to get to car
-            ytmp++;
-
-        }else{
-
-            //travel left till first empty square
-            while(this.board.isSameCar(currCar,xtmp,ytmp))
-                xtmp--;
-
-            //step back to get to car (avoids out of bounds exception)
-            xtmp++;
-        }
 
         //Range of motion does not begin till after the first empty square
         ROM[0] = 1;
@@ -116,29 +97,17 @@ public class Node {
         }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
 
 
-        //reset coordinates
+        //reset coordinates (leftmost/upmost coordinate of car)
         xtmp = x;
-
         ytmp = y;
 
-        //start at positive end of car (bottom/right of car)
-        if(this.board.isVertical(currCar)) {
+        //get to right/downmost part of car
+        if(this.board.isVertical(currCar))
 
-            //travel down till first empty square
-            while(this.board.isSameCar(currCar,xtmp,ytmp))
-                ytmp++;
+            ytmp += this.board.getLength(currCar)-1;
+        else
+            xtmp += this.board.getLength(currCar)-1;
 
-            //step back to get to car
-            ytmp--;
-
-        }else{
-            //travel right till first empty square
-            while(this.board.isSameCar(currCar,xtmp,ytmp))
-                xtmp++;
-
-            //step back to get to car
-            xtmp--;
-        }
 
         //Range of motion does not begin till after the first empty square
         ROM[1] = -1;
@@ -160,7 +129,8 @@ public class Node {
         }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
 
         return ROM;
-    }
+        
+    }//ROM function
 
     //return all possible neighbours as an ArrayList of Nodes
     public ArrayList<Node> generateNeighbours() {

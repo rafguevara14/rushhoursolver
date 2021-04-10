@@ -43,7 +43,7 @@ public class Test {
         test.ROMtest("E",2,1,"B16.txt");
 
         //[-1,1]
-        test.ROMtest("F",1,3,"B16.txt");
+        test.ROMtest("F",1,2,"B16.txt");
 
         //[0,4]
         test.ROMtest("G",0,5,"B16.txt");

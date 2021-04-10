@@ -11,7 +11,7 @@ public class Board {
     private String[][] matrix = new String[6][6];
 
     private final static Map<String, int[]> properties = new HashMap<>();
-    
+
     public final static int LENGTH = 0;
 
     public final static int ISVERT = 1; //1 is vertical
@@ -77,7 +77,7 @@ public class Board {
     }
 
 
-    public int getProperty(String key, int property){
+    private int getProperty(String key, int property){
 
         if(property != LENGTH && property != ISVERT)
             throw new NoSuchElementException("The given property does not exist\n");
@@ -90,7 +90,7 @@ public class Board {
         if(!properties.containsKey(key))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
-        return properties.get(key)[LENGTH];
+        return getProperty(key,LENGTH);
 
     }
 
@@ -99,7 +99,7 @@ public class Board {
         if(!properties.containsKey(key))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
-        return (properties.get(key)[ISVERT] == ISVERT);
+        return (getProperty(key,ISVERT) == 1);
     }
 
     //setters
