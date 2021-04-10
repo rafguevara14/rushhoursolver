@@ -50,6 +50,16 @@ public class Node {
     }
 
 
+    public void generate_neighbourstest(){
+
+
+        ArrayList<Node> neighbours
+
+
+    }
+
+
+    //Pre-condition: needs the leftmost/upmost coordinate of the given car
     private int[] ROM(String currCar, int x, int y) {
 
 //        0 O..P..
@@ -150,7 +160,6 @@ public class Node {
         }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
 
         return ROM;
-
     }
 
     //return all possible neighbours as an ArrayList of Nodes

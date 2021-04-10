@@ -5,7 +5,6 @@ public class Test {
 
         Node test = new Node();
 
-
         //[0,0]
         test.ROMtest("O",5,0,"A00.txt");
 
@@ -26,6 +25,8 @@ public class Test {
         //[-2,1]
         test.ROMtest("R",2,5,"A00.txt");
 
+
+        //should have 15 neighbours
 
         //[0,0]
         test.ROMtest("A",0,0,"B16.txt");

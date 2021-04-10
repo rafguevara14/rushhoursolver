@@ -10,12 +10,11 @@ public class Board {
 
     private String[][] matrix = new String[6][6];
 
-    private static Map<String, int[]> properties = new HashMap<>();
+    private final static Map<String, int[]> properties = new HashMap<>();
+    
+    public final static int LENGTH = 0;
 
-
-    public final int LENGTH = 0;
-
-    public final int ISVERT = 1; //1 is vertical
+    public final static int ISVERT = 1; //1 is vertical
 
 
     //testing methods
