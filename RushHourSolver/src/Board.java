@@ -264,6 +264,7 @@ public class Board {
     }
 
 
+    //Post-condition
     private int[] initCoordinates(String carName){
 
         int[] coord = new int[2];
@@ -294,30 +295,99 @@ public class Board {
     //    returns a matrix with currCar moved steps steps. negative steps moves left or down. pos moves right or up
     private void makeMove(String currCar,int steps,Board oldBoard){
         copyMatrix(oldBoard.matrix);
-        int[] propertyArr = properties.get(currCar);
+//        int[] propertyArr = properties.get(currCar);
 
-        int carLength = propertyArr[0]; //for readability. doesn't have to be declared as variable. change later
-        int carOrientation = propertyArr[1]; //for readability. doesn't have to be declared as variable. change later
+        int carLength = getLength(currCar); //for readability. doesn't have to be declared as variable. change later
+//        boo carOrientation = isVertical(currCar); //for readability. doesn't have to be declared as variable. change later
 
+
+        //coordinates at the left/upmost part of car
         int[] initCoordinates = initCoordinates(currCar);
 
+        int itmp = 0;
 
+        //Pre-condition: initCoordinates should be "pushing the car"
 
 //        if car moves horizontally
-        if (carOrientation == 0){
-            for (int i=0; i< carLength; i++) {
-                setSquare(initCoordinates[0] + steps + i,initCoordinates[1],currCar);
-                setSquare(initCoordinates[0] + i,initCoordinates[1],".");
+        if (!isVertical(currCar)) {
+
+            //if moving left, "push" from other side of car
+            if (steps < 0) {
+                initCoordinates[0] += getLength(currCar) - 1;
             }
-        }
+
+
+            for (int i = 0; i < carLength; i++) {
+
+                itmp = i;
+                if (steps < 0) {
+                    itmp *= -1;
+                }
+
+                //move car
+                setSquare(initCoordinates[0] + steps + itmp, initCoordinates[1], currCar);
+
+            }
+//            if (steps < 0) {
+//
+//
+//                for (int i = 0; i > steps; i--)
+//
+//                    setSquare(initCoordinates[0] + i, initCoordinates[1], ".");
+//            }else{
+
+            //clean up path (with dots)
+
+                for (int i = 0; i < Math.abs(steps); i++) {
+                    itmp = i;
+                    if (steps < 0)
+                        itmp *= -1;
+
+                    setSquare(initCoordinates[0] + itmp, initCoordinates[1], ".");
+                }
+//            }
+        }//outer if statement
+
+
+        itmp = 0;
 
 
 //         if car moves vertically
-        if (carOrientation == 1){
-            for (int j=0; j< carLength; j++) {
-                setSquare(initCoordinates[0],initCoordinates[1] + steps + j,currCar);
-                setSquare(initCoordinates[0],initCoordinates[1] + j,".");
+        if (isVertical(currCar)){
+
+            //if moving up, "push" from other side of car
+            if(steps < 0)
+                initCoordinates[1] += getLength(currCar)-1;
+
+            for (int i=0; i < carLength; i++) {
+
+                itmp = i;
+                if (steps < 0) {
+                    itmp *= -1;
+                }
+
+
+
+                setSquare(initCoordinates[0],initCoordinates[1] + steps + itmp,currCar);
             }
+
+            //clean up path (with dots)
+            itmp = 0;
+
+            for (int i = 0; i < Math.abs(steps); i++) {
+                itmp = i;
+                if (steps < 0)
+                    itmp *= -1;
+
+                setSquare(initCoordinates[0], initCoordinates[1] + itmp, ".");
+            }
+
+
+
+//            //clean up path (with dots)
+//            for(int i = 0; i < steps; i++)
+//                setSquare(initCoordinates[0], initCoordinates[1] + i, ".");
+
         }
     }
 
