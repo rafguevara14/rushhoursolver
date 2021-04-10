@@ -4,7 +4,8 @@ import java.util.ArrayList;
 
 public class Node {
 
-    private ArrayList<String> visitedCars; //closed set
+    private ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
+
     private int H;
     private int G;
     private int F;
@@ -23,6 +24,14 @@ public class Node {
 
     }
 
+    //read from file
+    Node(String file) throws FileAlreadyExistsException, FileNotFoundException {
+
+        this.board = new Board(file);
+
+    }
+
+
     //creates a new Node from old board with one move executed
     Node(String currCar, int steps,Board oldBoard){
 
@@ -34,6 +43,8 @@ public class Node {
         //update G
 
         //update F
+
+
 
     }
 
@@ -49,10 +60,33 @@ public class Node {
     }
 
 
-    public void generate_neighbours_test(){
+    public void print_neighbours(Node test){
 
 
-//        ArrayList<Node> neighbours
+        ArrayList<Node> neighbours = test.generateNeighbours();
+
+        for(Node neighbour :neighbours){
+
+            neighbour.board.print_matrix();
+
+            System.out.println("\n");
+        }
+
+
+        System.out.println("Number of Neighbours: " + neighbours.size());
+
+
+    }
+
+
+    public static void generate_neighbours_test(String file) throws FileAlreadyExistsException, FileNotFoundException {
+
+        //some node to generate neighbours...read from file
+
+        Node test = new Node(file);
+
+        test.print_neighbours(test);
+
 
 
     }
@@ -129,13 +163,13 @@ public class Node {
         }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
 
         return ROM;
-        
+
     }//ROM function
 
     //return all possible neighbours as an ArrayList of Nodes
     public ArrayList<Node> generateNeighbours() {
 
-        ArrayList<Node> neighbours = null;
+        ArrayList<Node> neighbours = new ArrayList<Node>();
 
         //go through entire board looking for NEW cars
         for (int i = 0; i < 6; i++) {
@@ -156,9 +190,15 @@ public class Node {
                         int[] ROM = ROM(currCar, i, j);
 
                         //go through all moves for that car and generate a neighbour
-                        for (int step = ROM[0]; step <= ROM[1]; step++)
+                        for (int step = ROM[0]; step <= ROM[1]; step++) {
+
+                            //don't include moves with zero steps
+                            if(step == 0)
+                                continue;
 
                             neighbours.add(new Node(currCar, step, this.board));
+                        }
+
 
                     }//new car
                 }//car found
