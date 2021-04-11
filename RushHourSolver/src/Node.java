@@ -10,6 +10,8 @@ public class Node {
     private int G;
     private int F;
 
+    private Node parent;
+
     Board board;
 
     Node(){
@@ -22,6 +24,8 @@ public class Node {
 
         this.F = 0;
 
+        this.parent = null;
+
     }
 
     //read from file
@@ -29,24 +33,51 @@ public class Node {
 
         this.board = new Board(file);
 
+        this.H = 0;
+
+        this.G = 0;
+
+        this.F = 0;
+
+        this.parent = null;
+
     }
 
 
     //creates a new Node from old board with one move executed
-    Node(String currCar, int steps,Board oldBoard){
+    Node(String currCar, int steps,Node oldNode){
 
         //create new Board
-        this.board = new Board(currCar,steps,oldBoard);
+        this.board = new Board(currCar,steps, oldNode.board);
 
         //update H
+        this.H = 0; //for now...
 
         //update G
+        this.G = oldNode.getG()+1;
 
         //update F
+        this.F = this.H + this.G;
 
-
+        this.parent = oldNode;
 
     }
+
+    //getters
+
+    public int getG() {
+        return this.G;
+    }
+
+    public int getF() {
+        return this.F;
+    }
+
+    public int getH() {
+        return this.H;
+    }
+
+
 
     public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
 
@@ -89,6 +120,11 @@ public class Node {
 
 
 
+    }
+
+    public boolean isSolved(){
+
+        return this.board.isSolved();
     }
 
 
