@@ -16,6 +16,10 @@ public class Board {
 
     public final static int ISVERT = 1; //1 is vertical
 
+    private String move  = "";
+
+
+
 
     //testing methods
 
@@ -58,6 +62,10 @@ public class Board {
 
         //matrix is inverted
         return this.matrix[y][x];
+    }
+
+    public String getMove(){
+        return this.move;
     }
 
     public boolean isSameCar(String currCar, int x, int y){
@@ -292,8 +300,31 @@ public class Board {
 
 
 
+
+
     //    returns a matrix with currCar moved steps steps. negative steps moves left or down. pos moves right or up
     private void makeMove(String currCar,int steps,Board oldBoard){
+
+        //set move
+
+
+
+
+        String direction = "";
+
+        //direction
+
+        if(isVertical(currCar)){
+
+            direction += steps > 0 ? "D" : "U";
+
+        }else
+            direction += steps > 0 ? "R" : "L";
+
+        this.move += currCar + direction + Math.abs(steps) + "\n";
+
+
+
         copyMatrix(oldBoard.matrix);
 //        int[] propertyArr = properties.get(currCar);
 
@@ -381,6 +412,9 @@ public class Board {
 
                 setSquare(initCoordinates[0], initCoordinates[1] + itmp, ".");
             }
+
+
+
 
 
 
