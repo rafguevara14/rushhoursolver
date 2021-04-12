@@ -1,6 +1,6 @@
 import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Node {
 
@@ -10,7 +10,9 @@ public class Node {
 
     private Node parent;
 
-    Arr
+    private Map<Node,String> neighbours = new HashMap<Node,String>(); //key is the Node, value is move
+
+//    private static HashSet<Node> allNodes = new HashSet<Node>();
 
 
 
@@ -63,8 +65,6 @@ public class Node {
 
         this.parent = oldNode;
 
-        //add an edge
-
 
 
     }
@@ -83,6 +83,12 @@ public class Node {
         return this.H;
     }
 
+    public Set<Node> getNeighbours(){
+
+        return this.neighbours.keySet();
+
+
+    }
 
 
     public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
@@ -100,9 +106,9 @@ public class Node {
     public void print_neighbours(Node test){
 
 
-        ArrayList<Node> neighbours = test.generateNeighbours();
+      test.generateNeighbours();
 
-        for(Node neighbour :neighbours){
+        for(Node neighbour : this.getNeighbours()){
 
             neighbour.board.print_matrix();
 
@@ -209,11 +215,11 @@ public class Node {
     }//ROM function
 
     //return all possible neighbours as an ArrayList of Nodes
-    public ArrayList<Node> generateNeighbours() {
+    public void generateNeighbours() {
 
-        private ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
+        ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
 
-        ArrayList<Node> neighbours = new ArrayList<Node>();
+        Map<Node,String> neighbours = new HashMap<Node,String>(); //key is the Node, value is move
 
         //go through entire board looking for NEW cars
         for (int i = 0; i < 6; i++) {
@@ -240,7 +246,10 @@ public class Node {
                             if(step == 0)
                                 continue;
 
-                            neighbours.add(new Node(currCar, step,this));
+
+
+
+                            neighbours.put(new Node(currCar, step,this),this.board.getMove());
                         }
 
 
@@ -249,7 +258,7 @@ public class Node {
             }//j
         }//i (main for loop)
 
-        return neighbours;
+        this.neighbours = neighbours;
 
     }//generate neighbours function
 
