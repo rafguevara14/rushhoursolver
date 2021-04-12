@@ -2,52 +2,6 @@
 //
 //public class Graph {
 //
-//    public static void testAddEdge(){
-//
-////
-////        A -. D .- E ..- F
-////         \   |   /     |
-////       ....  .  ..     .
-////           \ | /      /
-////             B  ---- G
-////            ...       /
-////             I      ...
-////            . .    /
-////           H   FINAL
-//
-//        Graph testGraph = new Graph();
-//
-//
-//
-//        //AD
-//        testGraph.addEdge(new Node(),new Node(),".");
-//
-//
-//        //DE
-//        testGraph.addEdge(new Node(),new Node(),".");
-//
-//
-//        //AD
-//        testGraph.addEdge(new Node(),new Node(),".");
-//
-//
-//        //AD
-//        testGraph.addEdge(new Node(),new Node(),".");
-//
-//
-//        //AD
-//        testGraph.addEdge(new Node(),new Node(),".");
-//
-//
-//        //AD
-//        testGraph.addEdge(new Node(),new Node(),".");
-//
-//
-//
-//
-//
-//
-//    }
 //
 //
 //
@@ -95,9 +49,34 @@
 //        return this.Edges.get(Objects.hash(A,B));
 //    }
 //
-//    public void addEdge(Node A, Node B, String move){
+//    private void addEdge(Node A, Node B, String move){
 //
 //        Edges.put(Objects.hash(A,B), new Edge(A,B,move));
 //    }
+//
+//    //adds neighbours and returns nodes
+//    public ArrayList<Node>  addNeighbours(Node currentNode){
+//
+//        ArrayList<Node> neighbours = currentNode.generateNeighbours();
+//
+//
+//
+//        for(Node neighbour : neighbours){
+//            //check if already in graph
+//
+//
+//            //add to graph
+//
+//            currentNode
+//
+//
+//
+//        }
+//
+//
+//
+//
+//    }
+//
 //
 //}//Graph
