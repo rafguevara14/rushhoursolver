@@ -232,7 +232,7 @@ public class Node {
                             if(step == 0)
                                 continue;
 
-                            neighbours.add(new Node(currCar, step, this.board));
+                            neighbours.add(new Node(currCar, step,this));
                         }
 
 
