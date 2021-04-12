@@ -10,13 +10,24 @@ public class Node {
 
     private Node parent;
 
-    private Map<Node,String> neighbours = new HashMap<Node,String>(); //key is the Node, value is move
 
 //    private static HashSet<Node> allNodes = new HashSet<Node>();
 
-
-
     Board board;
+
+    private Map<Node,String> neighbours = new HashMap<Node,String>(new Comparator<Node>() {
+        @Override
+        public int compare(Node o1, Node o2) {
+            return 0;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            return false;
+        }
+    });
+
+
 
     Node(){
 
@@ -84,10 +95,7 @@ public class Node {
     }
 
     public Set<Node> getNeighbours(){
-
         return this.neighbours.keySet();
-
-
     }
 
 
@@ -105,18 +113,22 @@ public class Node {
 
     public void print_neighbours(Node test){
 
+        this.board.print_matrix();
 
-      test.generateNeighbours();
-
-        for(Node neighbour : this.getNeighbours()){
-
-            neighbour.board.print_matrix();
-
-            System.out.println("\n");
-        }
-
-
-        System.out.println("Number of Neighbours: " + neighbours.size());
+//      test.generateNeighbours();
+//
+//        for(Node neighbour : this.getNeighbours()){
+//
+//            neighbour.board.print_matrix();
+//
+//            System.out.println(neighbour.board.getMove());
+//
+//
+//            System.out.println("\n");
+//        }
+//
+//
+//        System.out.println("Number of Neighbours: " + neighbours.size());
 
 
     }

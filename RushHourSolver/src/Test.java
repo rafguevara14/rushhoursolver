@@ -7,7 +7,10 @@ public class Test {
 //
 //
 //
-        Node.generate_neighbours_test("A00.txt");
+
+        Solver.solveFromFile("A00.txt","");
+
+//        Node.generate_neighbours_test("A00.txt");
 
 //        //[0,0]
 //        test.ROMtest("O",5,0,"A00.txt");

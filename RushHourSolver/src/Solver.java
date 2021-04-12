@@ -83,6 +83,10 @@ public class Solver {
 
                 //solved board
                 if(neighbour.isSolved()) {
+
+                    neighbour.print_neighbours(currentNode);
+
+
                     return "";
 //                  return createFilePath(neighbour);
 
