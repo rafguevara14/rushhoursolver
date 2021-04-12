@@ -4,13 +4,15 @@ import java.util.ArrayList;
 
 public class Node {
 
-    private ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
-
     private int H;
     private int G;
     private int F;
 
     private Node parent;
+
+    Arr
+
+
 
     Board board;
 
@@ -60,6 +62,10 @@ public class Node {
         this.F = this.H + this.G;
 
         this.parent = oldNode;
+
+        //add an edge
+
+
 
     }
 
@@ -204,6 +210,8 @@ public class Node {
 
     //return all possible neighbours as an ArrayList of Nodes
     public ArrayList<Node> generateNeighbours() {
+
+        private ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
 
         ArrayList<Node> neighbours = new ArrayList<Node>();
 
