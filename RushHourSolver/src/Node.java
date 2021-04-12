@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 
-public class Node {
+public class Node implements Comparable<Node>{
 
     private int H;
     private int G;
@@ -96,25 +96,31 @@ public class Node {
 
     }
 
+    public void print_matrix(Node test){
 
+        this.board.print_matrix();
+
+
+
+    }
     public void print_neighbours(Node test){
 
         this.board.print_matrix();
 
-//      test.generateNeighbours();
-//
-//        for(Node neighbour : this.getNeighbours()){
-//
-//            neighbour.board.print_matrix();
-//
-//            System.out.println(neighbour.board.getMove());
-//
-//
-//            System.out.println("\n");
-//        }
-//
-//
-//        System.out.println("Number of Neighbours: " + neighbours.size());
+      Set<Node> neighbours = test.generateNeighbours().keySet();
+
+        for(Node neighbour : neighbours){
+
+            neighbour.board.print_matrix();
+
+            System.out.println(neighbour.board.getMove());
+
+
+            System.out.println("\n");
+        }
+
+
+        System.out.println("Number of Neighbours: " + neighbours.size());
 
 
     }
@@ -213,11 +219,11 @@ public class Node {
     }//ROM function
 
     //return all possible neighbours as an ArrayList of Nodes
-    public ArrayList<Node> generateNeighbours() {
+    public Map<Node,String> generateNeighbours() {
 
         ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
 
-        ArrayList<Node> neighbours = new ArrayList<Node>();
+        Map<Node,String> neighbours = new HashMap<Node,String>(); //key is the Node, value is move
 
         //go through entire board looking for NEW cars
         for (int i = 0; i < 6; i++) {
@@ -245,9 +251,11 @@ public class Node {
                                 continue;
 
 
+                            Node neighbour = new Node(currCar, step,this);
 
+                            String move = neighbour.board.getMove();
 
-                            neighbours.add(new Node(currCar, step,this));
+                            neighbours.put(neighbour,move);
                         }
 
 
@@ -262,4 +270,8 @@ public class Node {
 
     }//generate neighbours function
 
+    @Override
+    public int compareTo(Node o) {
+        return 0;
+    }
 }//Node
