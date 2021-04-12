@@ -12,11 +12,12 @@ public class Board {
 
     private final static Map<String, int[]> properties = new HashMap<>();
 
+
     public final static int LENGTH = 0;
 
     public final static int ISVERT = 1; //1 is vertical
 
-    private String move  = "";
+//    private String move  = "";
 
 
 
@@ -64,9 +65,9 @@ public class Board {
         return this.matrix[y][x];
     }
 
-    public String getMove(){
-        return this.move;
-    }
+//    public String getMove(){
+//        return this.move;
+//    }
 
     public boolean isSameCar(String currCar, int x, int y){
 
