@@ -10,6 +10,8 @@ public class Test {
 
         Solver.solveFromFile("A00.txt","");
 
+//        Graph.testGraph();
+
 //        Node.generate_neighbours_test("A00.txt");
 
 //        //[0,0]
