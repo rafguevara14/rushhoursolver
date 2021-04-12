@@ -17,7 +17,7 @@ public class Board {
 
     public final static int ISVERT = 1; //1 is vertical
 
-//    private String move  = "";
+    private String move  = "";
 
 
 
@@ -65,9 +65,9 @@ public class Board {
         return this.matrix[y][x];
     }
 
-//    public String getMove(){
-//        return this.move;
-//    }
+    public String getMove(){
+        return this.move;
+    }
 
     public boolean isSameCar(String currCar, int x, int y){
 
@@ -322,7 +322,7 @@ public class Board {
         }else
             direction += steps > 0 ? "R" : "L";
 
-//        this.move += currCar + direction + Math.abs(steps) + "\n";
+        this.move += currCar + direction + Math.abs(steps) + "\n";
 
 
 
