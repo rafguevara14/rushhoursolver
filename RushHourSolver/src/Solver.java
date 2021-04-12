@@ -49,6 +49,8 @@ public class Solver {
 
     private static String Astar(Node initVertex){
 
+        Graph graph = new Graph();
+
         //initialize data structures
         PriorityQueue<Node> OpenQueue = new PriorityQueue<Node>(); //override comparator for heuristic implementation
 
@@ -69,7 +71,7 @@ public class Solver {
 
         //Astar algorithm
 
-        while(OpenQueue.isEmpty()){
+        while(!OpenQueue.isEmpty()){
 
             Node currentNode = OpenQueue.remove();
 
@@ -77,14 +79,13 @@ public class Solver {
                 continue;
 
 
-            for(Node neighbour : currentNode.getNeighbours()){
-
+            for(Node neighbour : graph.addNeighbours(currentNode)){
 
 
                 //solved board
                 if(neighbour.isSolved()) {
 
-                    neighbour.print_neighbours(currentNode);
+//                    neighbour.print_matrix(currentNode);
 
 
                     return "";
