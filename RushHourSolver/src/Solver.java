@@ -77,7 +77,7 @@ public class Solver {
                 continue;
 
 
-            for(Node neighbour : currentNode.generateNeighbours()){
+            for(Node neighbour : currentNode.getNeighbours()){
 
 
 
