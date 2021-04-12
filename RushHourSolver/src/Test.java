@@ -3,10 +3,10 @@ public class Test {
     public static void main(String[] args) throws Exception {
 
 
-        Node test = new Node();
-
-
-
+//        Node test = new Node();
+//
+//
+//
         Node.generate_neighbours_test("A00.txt");
 
 //        //[0,0]

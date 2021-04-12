@@ -322,7 +322,7 @@ public class Board {
         }else
             direction += steps > 0 ? "R" : "L";
 
-        this.move += currCar + direction + Math.abs(steps) + "\n";
+//        this.move += currCar + direction + Math.abs(steps) + "\n";
 
 
 
