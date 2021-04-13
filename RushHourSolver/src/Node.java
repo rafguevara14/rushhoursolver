@@ -77,6 +77,16 @@ public class Node {
         return this.H;
     }
 
+    public Node getParent(){
+        return this.parent;
+    }
+
+
+//    setters
+    public void setParent(Node newParent){
+        this.parent = newParent;
+    }
+
 
 
     public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
