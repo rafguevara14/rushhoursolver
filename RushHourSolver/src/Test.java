@@ -85,9 +85,24 @@ public class Test {
 //        nextstate.print_properties();
 
 
+
+//        createMoveList testing:
+        Node initNode = new Node("A00.txt");
+        Node node2 = new Node("X", 2, initNode);
+        Node node3 = new Node("X", 1, node2);
+
+//        should return :
+//        XR2
+//        XR1
+        Solver.moveListTest(node2);
+
+
+//        toFile testing - with :
+
+//        toFile testing - with moveList:
+
+
+
     }
-
-
-
 }
 ;
