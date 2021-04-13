@@ -20,10 +20,6 @@ public class Solver {
 //        moveList += pop stack
 
 
-
-
-
-
     }
 
     private String toFile(Node endNode){
@@ -43,7 +39,7 @@ public class Solver {
 
 
 
-
+//    actual A* algo. takes initial node and returns output path
     private static String Astar(Node initVertex){
 
         //initialize data structures
@@ -73,7 +69,7 @@ public class Solver {
             if(ClosedSet.contains(currentNode))
                 continue;
 
-
+//          for every node in currentNode's neighbours
             for(Node neighbour : currentNode.generateNeighbours()){
 
 
