@@ -103,6 +103,9 @@ public class Node {
 //        return this.neighbours.keySet();
 //    }
 
+    public void setParent(Node parent) { this.parent = parent; }
+
+
 
     public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
 
