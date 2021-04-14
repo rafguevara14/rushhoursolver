@@ -56,6 +56,10 @@ public class Board {
 
 
     //getters
+    public String[][] getMatrix(){
+        return this.matrix;
+    }
+
     public String getSquare(int x, int y) {
 
         if (x >= 6 || y >= 6 || x < 0 || y < 0)
