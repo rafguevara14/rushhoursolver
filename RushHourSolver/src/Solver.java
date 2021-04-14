@@ -6,6 +6,81 @@ import java.util.Queue;
 
 public class Solver {
 
+
+    public static void testClosedSet()throws Exception{
+
+        HashSet<Node> ClosedSet = new HashSet<Node>();
+
+
+        Node B = new Node("A00.txt");
+
+        ClosedSet.add(B);
+
+        System.out.println("B");
+
+
+        B.getBoard().print_matrix();
+
+        System.out.println();
+
+        Node A = new Node("A",2,B);
+
+
+        System.out.println("A");
+
+
+        System.out.println("Hash code of A: " + A.hashCode());
+
+        A.getBoard().print_matrix();
+
+        System.out.println();
+
+        ClosedSet.add(A);
+
+
+        Node middleman = new Node("A",1,A);
+
+        System.out.println("MiddleMan");
+
+        middleman.getBoard().print_matrix();
+
+
+        System.out.println();
+
+        ClosedSet.add(middleman);
+
+
+        Node A2 = new Node("A",-1,middleman);
+
+        System.out.println("A2");
+
+
+        System.out.println("Hash code of A2: " + A2.hashCode());
+
+
+        A2.getBoard().print_matrix();
+
+        System.out.println();
+
+
+        //should both be true
+        System.out.println("Is A2 already in the closed set? " + ClosedSet.contains(A2));
+
+        System.out.println("Is A2 equal to A? " + A.equals(A2));
+
+
+        //A and A2 have the same boards, but traversed in different ways
+        //hashCode should be the same
+
+
+
+
+
+
+
+    }
+
+
     private String createMoveList(Node endNode){
 
         String moveList;
@@ -52,24 +127,12 @@ public class Solver {
         //initialize data structures
         PriorityQueue<Node> OpenQueue = new PriorityQueue<Node>(); //override comparator for heuristic implementation
 
-        HashSet<Node> ClosedSet = new HashSet<Node>(){
-
-            @Override
-            public boolean equals(Object o) {
-
-                //implement hashCode for two boards look the same
-                return false;
-            }
-
-
-        }; //implement equals method
-
+        HashSet<Node> ClosedSet = new HashSet<Node>();
 
         OpenQueue.add(initVertex);
 
-        //Astar algorithm
-
-        while(OpenQueue.isEmpty()){
+        //A* algorithm
+        while(!OpenQueue.isEmpty()){
 
             Node currentNode = OpenQueue.remove();
 
