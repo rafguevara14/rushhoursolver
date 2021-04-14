@@ -15,6 +15,21 @@ public class Node {
 
     Board board;
 
+
+    //compare only the state of the board
+    @Override
+    public int hashCode() {
+        return Arrays.deepHashCode(this.board.getMatrix());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+
+        return (this.hashCode() == o.hashCode());
+    }
+
+
+
     Node(){
 
         this.board = null;
@@ -80,6 +95,10 @@ public class Node {
         return this.H;
     }
 
+    public String getMove(){ return this.board.getMove(); }
+
+    public Board getBoard(){ return this.board; }
+
 //    public Set<Node> getNeighbours(){
 //        return this.neighbours.keySet();
 //    }
@@ -118,7 +137,6 @@ public class Node {
 
 
     }
-
 
     public static void generate_neighbours_test(String file) throws FileAlreadyExistsException, FileNotFoundException {
 
