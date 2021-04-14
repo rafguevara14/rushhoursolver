@@ -1,6 +1,19 @@
+import java.util.Arrays;
+
 public class Test {
 
     public static void main(String[] args) throws Exception {
+
+
+
+//        //use deepHashCode instead of hashCode. Compares deep contents of array.
+//       String[] x = new String[]{"a", "b"};
+//
+//       String[] y = new String[]{"a", "b"};
+//
+//
+//       System.out.println(Arrays.deepHashCode(x) == Arrays.deepHashCode(y));
+
 
 
 //        Node test = new Node();
@@ -8,7 +21,10 @@ public class Test {
 //
 //
 
-        Solver.solveFromFile("A00.txt","");
+//        Solver.solveFromFile("A00.txt","");
+
+
+        Solver.testClosedSet();
 
 //        Node.generate_neighbours_test("A00.txt");
 
