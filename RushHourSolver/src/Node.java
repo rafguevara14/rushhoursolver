@@ -15,20 +15,6 @@ public class Node {
 
     Board board;
 
-    private Map<Node,String> neighbours = new HashMap<Node,String>(new Comparator<Node>() {
-        @Override
-        public int compare(Node o1, Node o2) {
-            return 0;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            return false;
-        }
-    });
-
-
-
     Node(){
 
         this.board = null;
@@ -94,9 +80,9 @@ public class Node {
         return this.H;
     }
 
-    public Set<Node> getNeighbours(){
-        return this.neighbours.keySet();
-    }
+//    public Set<Node> getNeighbours(){
+//        return this.neighbours.keySet();
+//    }
 
 
     public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
@@ -227,11 +213,11 @@ public class Node {
     }//ROM function
 
     //return all possible neighbours as an ArrayList of Nodes
-    public void generateNeighbours() {
+    public ArrayList<Node> generateNeighbours() {
 
         ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
 
-        Map<Node,String> neighbours = new HashMap<Node,String>(); //key is the Node, value is move
+        ArrayList<Node> neighbours = new ArrayList<Node>();
 
         //go through entire board looking for NEW cars
         for (int i = 0; i < 6; i++) {
@@ -258,10 +244,7 @@ public class Node {
                             if(step == 0)
                                 continue;
 
-
-
-
-                            neighbours.put(new Node(currCar, step,this),this.board.getMove());
+                            neighbours.add(new Node(currCar, step,this));
                         }
 
 
@@ -270,7 +253,8 @@ public class Node {
             }//j
         }//i (main for loop)
 
-        this.neighbours = neighbours;
+        return neighbours;
+//        this.neighbours = neighbours;
 
     }//generate neighbours function
 
