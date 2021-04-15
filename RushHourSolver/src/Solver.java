@@ -1,8 +1,6 @@
 import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
-import java.util.HashSet;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.*;
 
 public class Solver {
 
@@ -72,11 +70,73 @@ public class Solver {
         //A and A2 have the same boards, but traversed in different ways
         //hashCode should be the same
 
+    }
 
 
+    public static void testClosedMap()throws Exception{
+
+        HashMap<Integer,Node> ClosedSet = new HashMap<Integer,Node>();
 
 
+        Node B = new Node("A00.txt");
 
+        ClosedSet.put(B.hashCode(),B);
+
+        System.out.println("B");
+
+
+        B.getBoard().print_matrix();
+
+        System.out.println();
+
+        Node A = new Node("A",2,B);
+
+
+        System.out.println("A");
+
+
+        System.out.println("Hash code of A: " + A.hashCode());
+
+        A.getBoard().print_matrix();
+
+        System.out.println();
+
+        ClosedSet.put(A.hashCode(),A);
+
+
+        Node middleman = new Node("A",1,A);
+
+        System.out.println("MiddleMan");
+
+        middleman.getBoard().print_matrix();
+
+
+        System.out.println();
+
+        ClosedSet.put(middleman.hashCode(),middleman);
+
+
+        Node A2 = new Node("A",-1,middleman);
+
+        System.out.println("A2");
+
+
+        System.out.println("Hash code of A2: " + A2.hashCode());
+
+
+        A2.getBoard().print_matrix();
+
+        System.out.println();
+
+
+        //should both be true
+        System.out.println("Is A2 already in the closed set? " + ClosedSet.containsKey(A2.hashCode()));
+
+        System.out.println("Is A2 equal to A? " + A.equals(A2));
+
+
+        //A and A2 have the same boards, but traversed in different ways
+        //hashCode should be the same
 
     }
 
@@ -124,10 +184,32 @@ public class Solver {
 
     private static String Astar(Node initVertex){
 
+        String[][] answer={ {".",".",".",".","A","A"},
+                            {".",".",".",".",".","."},
+                            {".",".",".",".","X","X"},
+                            {".",".","Q","Q","Q","O"},
+                            {"C","C",".",".",".","O"},
+                            {".","R","R","R",".","O"},
+
+
+                        };
+
+
+//        ....AA
+//        ......
+//        ....XX
+//        ..QQQO
+//        CC...O
+//        .RRR.O
+
+        int count= 0;
+
         //initialize data structures
         PriorityQueue<Node> OpenQueue = new PriorityQueue<Node>(); //override comparator for heuristic implementation
 
-        HashSet<Node> ClosedSet = new HashSet<Node>();
+//        HashSet<Node> ClosedSet = new HashSet<Node>();
+
+        HashMap<Integer,Node> ClosedSet = new HashMap<Integer,Node>();
 
         OpenQueue.add(initVertex);
 
@@ -136,37 +218,67 @@ public class Solver {
 
             Node currentNode = OpenQueue.remove();
 
-            if(ClosedSet.contains(currentNode))
+//            if(OpenQueue.isEmpty()){
+//
+//                System.out.print("almost done!\n");
+//            }
+//
+//            if(Arrays.deepEquals(currentNode.getBoard().getMatrix(), answer)){
+//
+//                System.out.println("Solution found!");
+//            }
+
+
+            if(ClosedSet.containsKey(currentNode.hashCode()))
                 continue;
 
-
+            //go through each node
             for(Node neighbour : currentNode.generateNeighbours()){
 
+                if(ClosedSet.containsKey(neighbour.hashCode()))
+                    continue;
 
 
                 //solved board
                 if(neighbour.isSolved()) {
 
-                    neighbour.print_neighbours(currentNode);
+                    neighbour.getBoard().print_matrix();
 
+                    neighbour.setParent(currentNode);
 
-                    return "";
+                    return "Found Solution!";
 //                  return createFilePath(neighbour);
 
                 }else{
 
+
                     OpenQueue.add(neighbour);
 
+                    neighbour.setParent(currentNode);
                 }
 
 
+                count++;
+
             }// for loop
 
-            ClosedSet.add(currentNode); //consider where to add stuff to the closed set
+//            if(count == 38494){
+//
+//                currentNode.getBoard().print_matrix();
+//
+//
+//
+//                System.out.println("Hi");
+//            }
+
+            //mark as visited
+            ClosedSet.put(currentNode.hashCode(),currentNode); //consider where to add stuff to the closed set
 
         }//while loop
 
-        return "";
+
+//        System.out.println("Count: " + count);
+        return "No solution found :(";
     }
 
     //methods
@@ -177,7 +289,10 @@ public class Solver {
         //reads from file
         Node initVertex = new Node(inputPath);
 
-        outputPath = Astar(initVertex);
+//        outputPath = Astar(initVertex);
+
+
+        System.out.println(Astar(initVertex));
 
 
 
