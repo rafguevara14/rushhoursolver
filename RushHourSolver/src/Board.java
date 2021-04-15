@@ -273,7 +273,7 @@ public class Board {
 
     //    checks if board is solved
     public boolean isSolved() {
-        return (getSquare(2,5).equals("X") ) && (getSquare(2,4).equals("X"));
+        return (getSquare(5,2).equals("X") ) && (getSquare(4,2).equals("X"));
     }
 
 
