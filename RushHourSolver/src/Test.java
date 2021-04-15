@@ -21,11 +21,29 @@ public class Test {
 //
 //
 
-//        Solver.solveFromFile("A00.txt","");
 
 
-        Solver.testClosedSet();
+        for(Integer i = 0; i < 10; i++){
 
+            String fileName = "";
+
+
+
+            fileName += "A0" + i.toString() + ".txt";
+
+            System.out.println(fileName + "\n");
+
+
+            Solver.solveFromFile("A01.txt","");
+
+        }
+
+
+
+
+//        Solver.testClosedSet();
+
+//        Solver.testClosedMap();
 //        Node.generate_neighbours_test("A00.txt");
 
 //        //[0,0]
