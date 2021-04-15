@@ -2,7 +2,7 @@ import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 
-public class Node {
+public class Node implements Comparable<Node> {
 
     private int H;
     private int G;
@@ -28,7 +28,10 @@ public class Node {
         return (this.hashCode() == o.hashCode());
     }
 
-
+    @Override
+    public int compareTo(Node o) {
+        return Integer.compare(this.getF(),o.getF());
+    }
 
     Node(){
 
@@ -43,8 +46,8 @@ public class Node {
         this.parent = null;
 
     }
-
     //read from file
+
     Node(String file) throws FileAlreadyExistsException, FileNotFoundException {
 
         this.board = new Board(file);
@@ -59,8 +62,8 @@ public class Node {
 
     }
 
-
     //creates a new Node from old board with one move executed
+
     Node(String currCar, int steps,Node oldNode){
 
         //create new Board
@@ -73,7 +76,7 @@ public class Node {
         this.G = oldNode.getG()+1;
 
         //update F
-        this.F = this.H + this.G;
+        this.F = this.getH() + this.getG();
 
         this.parent = oldNode;
 
@@ -98,9 +101,9 @@ public class Node {
     public String getMove(){ return this.board.getMove(); }
 
     public Board getBoard(){ return this.board; }
-
 //    public Set<Node> getNeighbours(){
 //        return this.neighbours.keySet();
+
 //    }
 
     public void setParent(Node parent) { this.parent = parent; }
@@ -158,8 +161,8 @@ public class Node {
         return this.board.isSolved();
     }
 
-
     //Pre-condition: needs the leftmost/upmost coordinate of the given car
+
     private int[] ROM(String currCar, int x, int y) {
 
 //        0 O..P..
@@ -232,8 +235,8 @@ public class Node {
         return ROM;
 
     }//ROM function
-
     //return all possible neighbours as an ArrayList of Nodes
+
     public ArrayList<Node> generateNeighbours() {
 
         ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
@@ -278,5 +281,4 @@ public class Node {
 //        this.neighbours = neighbours;
 
     }//generate neighbours function
-
 }//Node
