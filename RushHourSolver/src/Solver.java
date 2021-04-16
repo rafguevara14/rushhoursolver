@@ -184,15 +184,15 @@ public class Solver {
 
     private static String Astar(Node initVertex){
 
-        String[][] answer={ {".",".",".",".","A","A"},
-                            {".",".",".",".",".","."},
-                            {".",".",".",".","X","X"},
-                            {".",".","Q","Q","Q","O"},
-                            {"C","C",".",".",".","O"},
-                            {".","R","R","R",".","O"},
-
-
-                        };
+//        String[][] answer={ {".",".",".",".","A","A"},
+//                            {".",".",".",".",".","."},
+//                            {".",".",".",".","X","X"},
+//                            {".",".","Q","Q","Q","O"},
+//                            {"C","C",".",".",".","O"},
+//                            {".","R","R","R",".","O"},
+//
+//
+//                        };
 
 
 //        ....AA
@@ -202,7 +202,7 @@ public class Solver {
 //        CC...O
 //        .RRR.O
 
-        int count= 0;
+//        int count= 0;
 
         //initialize data structures
         PriorityQueue<Node> OpenQueue = new PriorityQueue<Node>(); //override comparator for heuristic implementation
@@ -258,7 +258,7 @@ public class Solver {
                 }
 
 
-                count++;
+//                count++;
 
             }// for loop
 
