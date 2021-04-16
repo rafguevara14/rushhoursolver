@@ -5,6 +5,22 @@ public class Test {
     public static void main(String[] args) throws Exception {
 
 
+        //java functions test
+
+//        String hello = "hello";
+//
+//        hello.concat(" world\n");
+//
+//
+//
+//
+//        //movelist test
+//
+//        Solver.moveListTest("A00.txt");
+//
+//
+
+
 
 //        //use deepHashCode instead of hashCode. Compares deep contents of array.
 //       String[] x = new String[]{"a", "b"};
@@ -19,8 +35,8 @@ public class Test {
 //        Node test = new Node();
 //
 //
-//
-//
+
+
 //        String fileName = "A01.txt";
 //            System.out.println(fileName + "\n");
 ////
@@ -29,90 +45,97 @@ public class Test {
 //
 //        Solver.solveFromFile("A02.txt","");
 //
+//
+//
+//
+//        for(Integer i = 0; i < 10; i++){
+//
+//            if(i == 1){
+//
+//                System.out.print("");
+//            }
+//
+//
+//            fileName = "";
+//
+//
+//
+//            fileName += "A0" + i.toString() + ".txt";
+//
+//            System.out.println(fileName + "\n");
+//
+//
+//            Solver.solveFromFile(fileName,"");
+//
+//        }
+//
+//        String file = "A10.txt";
+//
+//        System.out.println(file + "\n");
+//
+//
+//        Solver.solveFromFile(file,"");
+//
+//
+//        for(Integer i = 1; i < 10; i++){
+//
+//            fileName = "";
+//
+//
+//
+//            fileName += "B1" + i.toString() + ".txt";
+//
+//            System.out.println(fileName + "\n");
+//
+//
+//            Solver.solveFromFile(fileName,"");
+//
+//        }
+//
+//        fileName = "B20.txt";
+//
+//        System.out.println(fileName + "\n");
+//
+//
+//        Solver.solveFromFile(fileName,"");
+//
+//        for(Integer i = 1; i < 10; i++){
+//
+//            file = "";
+//
+//            file += "C2" + i.toString() + ".txt";
+//
+//            System.out.println(file + "\n");
+//
+//
+//            Solver.solveFromFile(file,"");
+//
+//        }
+//
+//
+//        for(Integer i = 0; i < 6; i++){
+//
+//            file = "";
+//
+//            file += "D3" + i.toString() + ".txt";
+//
+//            System.out.println(file + "\n");
+//
+//
+//            Solver.solveFromFile(file,"");
+//
+//        }
+
+
+
+        String file = "";
+
+            file += "D35.txt";
+
+            System.out.println(file + "\n");
 
 //
-
-        for(Integer i = 0; i < 10; i++){
-
-            if(i == 1){
-
-                System.out.print("");
-            }
-
-
-            String fileName = "";
-
-
-
-            fileName += "A0" + i.toString() + ".txt";
-
-            System.out.println(fileName + "\n");
-
-
-            Solver.solveFromFile(fileName,"");
-
-        }
-
-        String file = "A10.txt";
-
-        System.out.println(file + "\n");
-
-
-        Solver.solveFromFile(file,"");
-
-
-        for(Integer i = 1; i < 10; i++){
-
-            String fileName = "";
-
-
-
-            fileName += "B1" + i.toString() + ".txt";
-
-            System.out.println(fileName + "\n");
-
-
-            Solver.solveFromFile(fileName,"");
-
-        }
-
-        String fileName = "B20.txt";
-
-        System.out.println(fileName + "\n");
-
-
-        Solver.solveFromFile(fileName,"");
-
-        for(Integer i = 1; i < 10; i++){
-
-            file = "";
-
-            file += "C2" + i.toString() + ".txt";
-
-            System.out.println(file + "\n");
-
-
             Solver.solveFromFile(file,"");
-
-        }
-
-
-        for(Integer i = 0; i < 6; i++){
-
-            file = "";
-
-            file += "D3" + i.toString() + ".txt";
-
-            System.out.println(file + "\n");
-
-
-            Solver.solveFromFile(file,"");
-
-        }
-
-
-
-
 //        Solver.testClosedSet();
 
 //        Solver.testClosedMap();
@@ -194,16 +217,18 @@ public class Test {
 //        nextstate.print_properties();
 
 
-
-//        createMoveList testing:
-        Node initNode = new Node("A00.txt");
-        Node node2 = new Node("X", 2, initNode);
-        Node node3 = new Node("X", 1, node2);
-
-//        should return :
-//        XR2
-//        XR1
-        Solver.moveListTest(node2);
+//
+////        createMoveList testing:
+//        Node initNode = new Node("A00.txt");
+//
+//
+////        Node node2 = new Node("X", 2, initNode);
+////        Node node3 = new Node("X", 1, node2);
+//
+////        should return :
+////        XR2
+////        XR1
+//        Solver.moveListTest(node2);
 
 
 //        toFile testing - with :
