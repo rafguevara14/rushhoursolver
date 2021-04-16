@@ -127,15 +127,36 @@ public class Test {
 //        }
 
 
+        for(Integer i = 0; i < 5; i++){
 
-        String file = "";
+            String file = "";
 
-            file += "D35.txt";
+            file += "F0" + i.toString() + ".txt";
 
             System.out.println(file + "\n");
 
+
+            String outpath = "";
+
+            outpath += "F0" + i.toString() + ".txt";
+
+
+            Solver.solveFromFile(file,outpath);
+
+        }
+
+
+
+
+
+//        String file = "";
 //
-            Solver.solveFromFile(file,"");
+//            file += "D35.txt";
+//
+//            System.out.println(file + "\n");
+//
+////
+//            Solver.solveFromFile(file,"");
 //        Solver.testClosedSet();
 
 //        Solver.testClosedMap();
