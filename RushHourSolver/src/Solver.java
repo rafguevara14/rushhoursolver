@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.FileAlreadyExistsException;
 
 import java.util.*;
@@ -142,59 +144,77 @@ public class Solver {
 
     }
 
+
+
+
     private static String createMoveList(Node node){
 
         String moveList = "";
-        Stack<String> stack = new Stack<>();
-        Node parent = node.getParent();
-
-        //push onto stack to reverse list
-
-        //recursion to pop off stack
-
-//        moveList += pop stack
-
-
+        Stack<String> stack = new Stack<String>();
 
 //        while node has parent, get the move and store it in stack
-        while (parent != null) {
+        while (node.getParent() != null) {
             stack.push(node.getMove());
-            node = parent;
-            node.setParent(node.getParent());
+            //traverse up
+            node = node.getParent();
+//            node.setParent(node.getParent());
         }
 
 
 //        pop from stack and concatenate to a String
         while (!stack.isEmpty())
-            moveList.concat(stack.pop()).concat("\n");
+            moveList = moveList.concat(stack.pop());
 
 
-        return moveList.substring(0, moveList.length() - 1);  //to get rid of the last newline character
+        return moveList;
 
     }
 
-    private String toFile(Node endNode){
+    private static void sendtoFile(String outputPath,String moveList) {
+
+        //code block referenced from: https://www.w3schools.com/java/java_files_create.asp
+        try {
+            FileWriter myWriter = new FileWriter(outputPath);
+            myWriter.write(moveList);
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+    public static void moveListTest(String file) throws Exception {
 
 
-        String moveList = createMoveList(endNode);
-        
-//        //output to file
-//
-//        String fileName;
-//
-//        return fileName;
+//        createMoveList testing:
+        Node initNode = new Node(file);
 
-        return "";
+
+
+        System.out.println("Old Board\n");
+        initNode.getBoard().print_matrix();
+
+
+
+
+        System.out.println(Astar(initNode));
+
+//        Node node2 = new Node("X", 2, initNode);
+//        Node node3 = new Node("X", 1, node2);
+
+//        should return :
+//        XR2
+//        XR1
+//        Solver.moveListTest(node2);
+
+
+
     }
 
-    public static void moveListTest(Node testNode){
-        System.out.println(createMoveList(testNode));
-    }
 
 
-
-//    actual A* algo. takes initial node and returns output path
-    private static String Astar(Node initVertex){
+//    actual A* algo. takes initial node and returns solution node
+    private static Node Astar(Node initVertex){
 
 //        String[][] answer={ {".",".",".",".","A","A"},
 //                            {".",".",".",".",".","."},
@@ -258,7 +278,12 @@ public class Solver {
 
                     neighbour.setParent(currentNode);
 
-                    return "Found Solution!";
+//                    createMoveList(currentNode);
+
+
+                    System.out.println("Found Solution!\n");
+
+                    return neighbour;
 //                  return createFilePath(neighbour);
 
                 }else{
@@ -288,9 +313,11 @@ public class Solver {
 
         }//while loop
 
-
 //        System.out.println("Count: " + count);
-        return "No solution found :(";
+
+        System.out.println("NO SOLUTION FOUND :(");
+
+        return null;
     }
 
     //methods
@@ -301,8 +328,17 @@ public class Solver {
         //reads from file
         Node initVertex = new Node(inputPath);
 
+        System.out.println("Old Board\n");
+        initVertex.getBoard().print_matrix();
 
-//        outputPath = Astar(initVertex);
+        System.out.println(Astar(initVertex));
+
+
+        Node solutionNode = Astar(initVertex);
+
+        String moveList = createMoveList(solutionNode);
+
+        sendtoFile("test.sol",moveList);
 
           //testing code
 //        System.out.println(Astar(initVertex));
@@ -310,8 +346,6 @@ public class Solver {
         //makes an empty output file called outputPath
 //        File outputFile = new File(outputPath);
 
-
-//        outputPath = Astar(initVertex);
 
     }//solveFromFile
 
