@@ -1,5 +1,7 @@
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
+
 import java.util.*;
 
 public class Solver {
@@ -140,16 +142,13 @@ public class Solver {
 
     }
 
+    private static String createMoveList(Node node){
 
-    private String createMoveList(Node endNode){
-
-        String moveList;
-
-        //use recursion and a stack to get to original Node
+        String moveList = "";
+        Stack<String> stack = new Stack<>();
+        Node parent = node.getParent();
 
         //push onto stack to reverse list
-
-
 
         //recursion to pop off stack
 
@@ -157,19 +156,28 @@ public class Solver {
 
 
 
+//        while node has parent, get the move and store it in stack
+        while (parent != null) {
+            stack.push(node.getMove());
+            node = parent;
+            node.setParent(node.getParent());
+        }
 
-        return "";
+
+//        pop from stack and concatenate to a String
+        while (!stack.isEmpty())
+            moveList.concat(stack.pop()).concat("\n");
 
 
+        return moveList.substring(0, moveList.length() - 1);  //to get rid of the last newline character
 
     }
 
     private String toFile(Node endNode){
 
 
-//        String moveList = createMoveList(endNode)
-//
-//
+        String moveList = createMoveList(endNode);
+        
 //        //output to file
 //
 //        String fileName;
@@ -179,9 +187,13 @@ public class Solver {
         return "";
     }
 
+    public static void moveListTest(Node testNode){
+        System.out.println(createMoveList(testNode));
+    }
 
 
 
+//    actual A* algo. takes initial node and returns output path
     private static String Astar(Node initVertex){
 
 //        String[][] answer={ {".",".",".",".","A","A"},
@@ -228,11 +240,11 @@ public class Solver {
 //                System.out.println("Solution found!");
 //            }
 
-
             if(ClosedSet.containsKey(currentNode.hashCode()))
                 continue;
 
-            //go through each node
+            //go through currentNode's neighbours
+
             for(Node neighbour : currentNode.generateNeighbours()){
 
                 if(ClosedSet.containsKey(neighbour.hashCode()))
@@ -289,14 +301,17 @@ public class Solver {
         //reads from file
         Node initVertex = new Node(inputPath);
 
+
 //        outputPath = Astar(initVertex);
 
+          //testing code
+//        System.out.println(Astar(initVertex));
 
-        System.out.println(Astar(initVertex));
+        //makes an empty output file called outputPath
+//        File outputFile = new File(outputPath);
 
 
-
-
+//        outputPath = Astar(initVertex);
 
     }//solveFromFile
 

@@ -2,7 +2,11 @@ import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 import java.util.*;
 
+
 public class Node implements Comparable<Node> {
+
+    //hello
+    private ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
 
     private int H;
     private int G;
@@ -97,16 +101,19 @@ public class Node implements Comparable<Node> {
     public int getH() {
         return this.H;
     }
-
     public String getMove(){ return this.board.getMove(); }
 
     public Board getBoard(){ return this.board; }
-//    public Set<Node> getNeighbours(){
-//        return this.neighbours.keySet();
-
-//    }
 
     public void setParent(Node parent) { this.parent = parent; }
+
+    public Node getParent(){
+        return this.parent;
+    }
+
+
+
+
 
 
 
