@@ -338,7 +338,7 @@ public class Solver {
 
         String moveList = createMoveList(solutionNode);
 
-        sendtoFile("test.sol",moveList);
+        sendtoFile(outputPath,moveList);
 
           //testing code
 //        System.out.println(Astar(initVertex));
@@ -352,5 +352,5 @@ public class Solver {
 
 
 
-    } //Solver
+} //Solver
 
