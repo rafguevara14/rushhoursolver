@@ -34,6 +34,10 @@ public class Node implements Comparable<Node> {
     @Override
     public int compareTo(Node o) {
         return Integer.compare(this.getF(),o.getF());
+
+//        return Integer.compare(o.getF(),this.getF());
+
+
     }
 
     Node(){
@@ -55,11 +59,11 @@ public class Node implements Comparable<Node> {
 
         this.board = new Board(file);
 
-        this.H = 0;
+        this.H = this.board.getHeuristic();
 
         this.G = 0;
 
-        this.F = 0;
+        this.F = this.getH() + this.getG();
 
         this.parent = null;
 
@@ -73,7 +77,7 @@ public class Node implements Comparable<Node> {
         this.board = new Board(currCar,steps, oldNode.board);
 
         //update H
-        this.H = 0; //for now...
+        this.H = this.board.getHeuristic(); //for now...
 
         //update G
         this.G = oldNode.getG()+1;
@@ -241,6 +245,7 @@ public class Node implements Comparable<Node> {
         return ROM;
 
     }//ROM function
+
     //return all possible neighbours as an ArrayList of Nodes
 
     public ArrayList<Node> generateNeighbours() {
