@@ -10,7 +10,7 @@ public class Board {
 
     private String[][] matrix = new String[6][6];
 
-    private static Map<String, int[]> properties;
+    private static Map<Integer, Byte> properties;
 
 
     public final static int LENGTH = 0;
@@ -26,7 +26,7 @@ public class Board {
 
     public void print_properties() {
 
-        properties.forEach((key, value) -> System.out.println(key + ":" + value[LENGTH] + ", " + value[ISVERT]));
+//        properties.forEach((key, value) -> System.out.println(key + ":" + value[LENGTH] + ", " + value[ISVERT]));
 
 
     }
@@ -78,7 +78,7 @@ public class Board {
         if (x >= 6 || y >= 6 || x < 0 || y < 0)
             return false;
 
-        if(!properties.containsKey(currCar))
+        if(!properties.containsKey(currCar.hashCode()))
             throw new NoSuchElementException("That car does not exist in the board\n");
 
         return getSquare(x,y).equals(currCar);
@@ -89,30 +89,31 @@ public class Board {
         return (x <= 5 && y <= 5 && x >= 0 && y >= 0);
     }
 
-
-    private int getProperty(String key, int property){
-
-        if(property != LENGTH && property != ISVERT)
-            throw new NoSuchElementException("The given property does not exist\n");
-        return properties.get(key)[property];
-
-    }
+//
+//    private int getProperty(String key, int property){
+//
+//        if(property != LENGTH && property != ISVERT)
+//            throw new NoSuchElementException("The given property does not exist\n");
+//        return properties.get(key)[property];
+//
+//    }
 
     public int getLength(String key){
 
-        if(!properties.containsKey(key))
+        if(!properties.containsKey(key.hashCode()))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
-        return getProperty(key,LENGTH);
+
+        return ( 0b0111 & properties.get(key.hashCode()) );
 
     }
 
     public boolean isVertical(String key){
 
-        if(!properties.containsKey(key))
+        if(!properties.containsKey(key.hashCode()))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
-        return (getProperty(key,ISVERT) == 1);
+        return ((0b1000 & properties.get(key.hashCode()) ) != 0);
     }
 
     //setters
@@ -135,7 +136,7 @@ public class Board {
     Board(String inputpath) throws FileAlreadyExistsException, FileNotFoundException {
 
         //overwrite old properties; are in a new board
-        this.properties = new HashMap<String,int[]>();
+        properties = new HashMap<Integer, Byte>();
 
         //creates the board
         File file = new File(inputpath);
@@ -179,27 +180,29 @@ public class Board {
 
             for (int j = 0; j < 6; j++) {
 
-                int[] tmp_properties = new int[2];
+                Byte tmp_properties = 0b0000;
 
                 //push car onto properties
 
-                if (!properties.containsKey(getSquare(i, j)) && !getSquare(i, j).equals(".")) {
+                if (!properties.containsKey(getSquare(i, j).hashCode()) && !getSquare(i, j).equals(".")) {
 //                    properties.put(this.matrix[i][j],tmp_properties);
 
 
                     //check vertical
 
-                    if (j == 5)
+                    if (j == 5) {
 
-                        tmp_properties[ISVERT] = 0;
+                        //do nothing
+                        tmp_properties = (byte) (0b0000 | tmp_properties);
 
-                    else if (i == 5)
+                    } else if (i == 5) {
 
-                        tmp_properties[ISVERT] = 1;
+                        tmp_properties = (byte) (0b1000 | tmp_properties);
 
-                    else //check vertical
-                        tmp_properties[ISVERT] = ((getSquare(i, j + 1).equals(getSquare(i, j))) ? 1 : 0);
+                    } else { //check vertical
 
+                        tmp_properties = (byte) (tmp_properties | ((getSquare(i, j + 1).equals(getSquare(i, j))) ? 0b1000 : 0b0000));
+                    }
 
                     //determine length
 
@@ -215,7 +218,7 @@ public class Board {
                         if (!getSquare(ipos, jpos).equals(carName))
                             break;
 
-                        if (tmp_properties[ISVERT] == 0)
+                        if ((byte) (tmp_properties & 0b1000) == 0)
                             ipos++;
                         else
                             jpos++;
@@ -224,7 +227,7 @@ public class Board {
                     }
 
                     //step back to end of car
-                    if (tmp_properties[ISVERT] == 0)
+                    if ((byte) (tmp_properties & 0b1000) == 0)
                         ipos--;
                     else
                         jpos--;
@@ -241,29 +244,29 @@ public class Board {
                             break;
 
 
-                        if (tmp_properties[ISVERT] == 0)
+                        if ((byte) (tmp_properties & 0b1000) == 0)
                             ineg--;
                         else
                             jneg--;
                     }
 
                     //step back to end of car
-                    if (tmp_properties[ISVERT] == 0)
+                    if ((byte) (tmp_properties & 0b1000) == 0)
                         ineg++;
                     else
                         jneg++;
 
                     //horizontal
-                    if (tmp_properties[ISVERT] == 0) {
+                    if ((byte) (tmp_properties & 0b1000) == 0) {
 
-                        tmp_properties[LENGTH] = (ipos - ineg) + 1;
+                        tmp_properties = (byte) (tmp_properties | (byte) ((ipos - ineg) + 1));
                     } else
-                        tmp_properties[LENGTH] = (jpos - jneg) + 1;
+                        tmp_properties = (byte) (tmp_properties | (byte) ((jpos - jneg) + 1));
 
 
                     //finally, push car onto properties array
 
-                    properties.put(getSquare(i, j), tmp_properties);
+                    properties.put(getSquare(i, j).hashCode(), tmp_properties);
 
                 }
 
@@ -271,7 +274,9 @@ public class Board {
 
         }//outer loop
 
-    }
+    }//constructor
+
+
 
     //    checks if board is solved
     public boolean isSolved() {
