@@ -6,7 +6,6 @@ import java.util.*;
 public class Node implements Comparable<Node> {
 
     //hello
-    private ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
 
     private int H;
     private int G;
