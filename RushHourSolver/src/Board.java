@@ -10,7 +10,7 @@ public class Board {
 
     private String[][] matrix = new String[6][6];
 
-    private final static Map<String, int[]> properties = new HashMap<>();
+    private static Map<String, int[]> properties;
 
 
     public final static int LENGTH = 0;
@@ -133,6 +133,9 @@ public class Board {
 
     //reads from file
     Board(String inputpath) throws FileAlreadyExistsException, FileNotFoundException {
+
+        //overwrite old properties; are in a new board
+        this.properties = new HashMap<String,int[]>();
 
         //creates the board
         File file = new File(inputpath);
@@ -263,7 +266,6 @@ public class Board {
                     properties.put(getSquare(i, j), tmp_properties);
 
                 }
-
 
             }//inner loop
 
