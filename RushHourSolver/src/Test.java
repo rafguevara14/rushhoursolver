@@ -46,100 +46,98 @@ public class Test {
 //        Solver.solveFromFile("A02.txt","");
 //
 //
-//
-//
-//        for(Integer i = 0; i < 10; i++){
-//
-//            if(i == 1){
-//
-//                System.out.print("");
-//            }
-//
-//
-//            fileName = "";
-//
-//
-//
-//            fileName += "A0" + i.toString() + ".txt";
-//
-//            System.out.println(fileName + "\n");
-//
-//
-//            Solver.solveFromFile(fileName,"");
-//
-//        }
-//
-//        String file = "A10.txt";
-//
-//        System.out.println(file + "\n");
-//
-//
-//        Solver.solveFromFile(file,"");
-//
-//
-//        for(Integer i = 1; i < 10; i++){
-//
-//            fileName = "";
-//
-//
-//
-//            fileName += "B1" + i.toString() + ".txt";
-//
-//            System.out.println(fileName + "\n");
-//
-//
-//            Solver.solveFromFile(fileName,"");
-//
-//        }
-//
-//        fileName = "B20.txt";
-//
-//        System.out.println(fileName + "\n");
-//
-//
-//        Solver.solveFromFile(fileName,"");
-//
-//        for(Integer i = 1; i < 10; i++){
-//
-//            file = "";
-//
-//            file += "C2" + i.toString() + ".txt";
-//
-//            System.out.println(file + "\n");
-//
-//
-//            Solver.solveFromFile(file,"");
-//
-//        }
-//
-//
-//        for(Integer i = 0; i < 6; i++){
-//
-//            file = "";
-//
-//            file += "D3" + i.toString() + ".txt";
-//
-//            System.out.println(file + "\n");
-//
-//
-//            Solver.solveFromFile(file,"");
-//
-//        }
+
+
+        String fileName;
+
+        for(Integer i = 0; i < 10; i++){
+
+            fileName = "A0" + i.toString() + ".txt";
+
+            System.out.println(fileName + "\n");
+
+            String outpath = "ourA0" + i.toString() + ".sol";
+
+
+            Solver.solveFromFile(fileName,outpath);
+
+        }
+
+        String file = "A10.txt";
+
+        System.out.println(file + "\n");
+
+
+        Solver.solveFromFile(file,"ourA10.sol");
+
+
+        for(Integer i = 1; i < 10; i++){
+
+            fileName = "";
+
+
+            fileName += "B1" + i.toString() + ".txt";
+
+            System.out.println(fileName + "\n");
+
+
+            String outpath = "ourB1" + i.toString() + ".sol";
+
+
+            Solver.solveFromFile(fileName,outpath);
+
+        }
+
+        fileName = "B20.txt";
+
+        System.out.println(fileName + "\n");
+
+
+        Solver.solveFromFile(fileName,"ourB20.sol");
+
+        for(Integer i = 1; i < 10; i++){
+
+            file = "";
+
+            file += "C2" + i.toString() + ".txt";
+
+            System.out.println(file + "\n");
+
+
+            String outpath = "ourC2" + i.toString() + ".sol";
+
+            Solver.solveFromFile(file,outpath);
+
+        }
+
+
+        for(Integer i = 0; i < 6; i++){
+
+            file = "";
+
+            file += "D3" + i.toString() + ".txt";
+
+            System.out.println(file + "\n");
+
+            String outpath = "ourD3" + i.toString() + ".sol";
+
+
+
+            Solver.solveFromFile(file,outpath);
+
+        }
 
 
         for(Integer i = 0; i < 5; i++){
 
-            String file = "";
+            file = "";
 
             file += "F0" + i.toString() + ".txt";
 
             System.out.println(file + "\n");
 
 
-            String outpath = "";
-
-            outpath += "F0" + i.toString() + ".txt";
-
+            String outpath = "ourF0" + i.toString() + ".sol";
 
             Solver.solveFromFile(file,outpath);
 
@@ -156,7 +154,7 @@ public class Test {
 //            System.out.println(file + "\n");
 //
 ////
-//            Solver.solveFromFile(file,"");
+//            Solver.solveFromFile(file,"ourD35.sol");
 //        Solver.testClosedSet();
 
 //        Solver.testClosedMap();
