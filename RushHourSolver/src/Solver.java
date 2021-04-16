@@ -274,14 +274,14 @@ public class Solver {
                 //solved board
                 if(neighbour.isSolved()) {
 
-                    neighbour.getBoard().print_matrix();
+//                    neighbour.getBoard().print_matrix();
 
                     neighbour.setParent(currentNode);
 
 //                    createMoveList(currentNode);
 
 
-                    System.out.println("Found Solution!\n");
+//                    System.out.println("Found Solution!\n");
 
                     return neighbour;
 //                  return createFilePath(neighbour);
@@ -328,10 +328,11 @@ public class Solver {
         //reads from file
         Node initVertex = new Node(inputPath);
 
-        System.out.println("Old Board\n");
-        initVertex.getBoard().print_matrix();
+//        System.out.println("Old Board\n");
 
-        System.out.println(Astar(initVertex));
+//        initVertex.getBoard().print_matrix();
+
+//        System.out.println(Astar(initVertex));
 
 
         Node solutionNode = Astar(initVertex);
