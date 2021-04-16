@@ -314,9 +314,6 @@ public class Board {
 
         //set move
 
-
-
-
         String direction = "";
 
         //direction
