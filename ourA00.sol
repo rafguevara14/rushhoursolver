@@ -1,5 +1,4 @@
-AR2
-CL1
+CL3
 QL1
 OD3
 XR4
