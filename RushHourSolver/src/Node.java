@@ -245,7 +245,7 @@ public class Node implements Comparable<Node> {
 
     public ArrayList<Node> generateNeighbours() {
 
-        ArrayList<String> visitedCars = new ArrayList<String>(); //closed set
+        HashMap<Integer,String> visitedCars = new HashMap<>(); //closed set
 
         ArrayList<Node> neighbours = new ArrayList<Node>();
 
@@ -259,10 +259,10 @@ public class Node implements Comparable<Node> {
                     String currCar = this.board.getSquare(i, j);
 
                     //found a NEW car
-                    if (!visitedCars.contains(currCar)) {
+                    if (!visitedCars.containsKey(currCar.hashCode())) {
 
                         //mark as visited
-                        visitedCars.add(currCar);
+                        visitedCars.put(currCar.hashCode(),currCar);
 
                         //determine ROM
                         int[] ROM = ROM(currCar, i, j);
