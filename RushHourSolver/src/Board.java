@@ -13,9 +13,9 @@ public class Board {
     private static Map<Integer, Byte> properties;
 
 
-    public final static int LENGTH = 0;
-
-    public final static int ISVERT = 1; //1 is vertical
+//    public final static int LENGTH = 0;
+//
+//    public final static int ISVERT = 1; //1 is vertical
 
     private String move  = "";
 
@@ -281,6 +281,39 @@ public class Board {
     //    checks if board is solved
     public boolean isSolved() {
         return (getSquare(5,2).equals("X") ) && (getSquare(4,2).equals("X"));
+    }
+
+    public int getHeuristic(){
+
+
+        int heuristic = 0;
+
+        int j = 2;
+        int i = 0;
+
+        while(!getSquare(i,j).equals("X")){
+            //traverse
+
+            i++;
+
+
+        }
+
+        //take two steps
+        i += 2;
+
+
+        while(i < 6){
+
+            if(!getSquare(i,j).equals(".")) {
+                heuristic += i + 10000*Math.random(); //is the factor; closer to exit
+            }
+
+            i++;
+
+        }
+
+        return heuristic;
     }
 
 
