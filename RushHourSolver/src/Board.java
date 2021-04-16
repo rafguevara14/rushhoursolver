@@ -8,6 +8,8 @@ import java.util.Scanner;
 
 public class Board {
 
+
+    //use a Map instead and make the representation use bytes instead
     private String[][] matrix = new String[6][6];
 
     private static Map<Integer, Byte> properties;
@@ -149,6 +151,14 @@ public class Board {
 
         //iterate through file and store elements in 2D matrix
 
+        this.matrix = new String[][]{ {".", ".", ".", ".", ".", "."},
+                                      {".", ".", ".", ".", ".", "."},
+                                      {".", ".", ".", ".", ".", "."},
+                                      {".", ".", ".", ".", ".", "."},
+                                      {".", ".", ".", ".", ".", "."},
+                                      {".", ".", ".", ".", ".", "."},
+                                    };
+
         String row;
 
         while (scanner.hasNext()) {
@@ -158,6 +168,10 @@ public class Board {
                 row = scanner.next();
 
                 for (int j = 0; j < 6; j++) {
+
+
+                    if(String.valueOf(row.charAt(j)).equals("."))
+                        continue;
 
                     this.matrix[i][j] = String.valueOf(row.charAt(j));
 
