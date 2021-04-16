@@ -13,6 +13,7 @@ public class Node implements Comparable<Node> {
 
     private Node parent;
 
+    private int hashCode;
 
 //    private static HashSet<Node> allNodes = new HashSet<Node>();
 
@@ -22,7 +23,7 @@ public class Node implements Comparable<Node> {
     //compare only the state of the board
     @Override
     public int hashCode() {
-        return Arrays.deepHashCode(this.board.getMatrix());
+        return this.hashCode;
     }
 
     @Override
@@ -52,6 +53,8 @@ public class Node implements Comparable<Node> {
 
         this.parent = null;
 
+        this.hashCode = 0;
+
     }
     //read from file
 
@@ -66,6 +69,8 @@ public class Node implements Comparable<Node> {
         this.F = this.getH() + this.getG();
 
         this.parent = null;
+
+        this.hashCode = Arrays.deepHashCode(this.board.getMatrix());
 
     }
 
@@ -87,7 +92,7 @@ public class Node implements Comparable<Node> {
 
         this.parent = oldNode;
 
-
+        this.hashCode = Arrays.deepHashCode(this.board.getMatrix());
 
     }
 
