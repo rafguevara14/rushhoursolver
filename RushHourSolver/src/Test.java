@@ -20,10 +20,25 @@ public class Test {
 //
 //
 //
+//
+//        String fileName = "A01.txt";
+//            System.out.println(fileName + "\n");
+////
+////
+//            Solver.solveFromFile(fileName,"");
+//
+//        Solver.solveFromFile("A02.txt","");
+//
 
-
+//
 
         for(Integer i = 0; i < 10; i++){
+
+            if(i == 1){
+
+                System.out.print("");
+            }
+
 
             String fileName = "";
 
@@ -34,7 +49,64 @@ public class Test {
             System.out.println(fileName + "\n");
 
 
-            Solver.solveFromFile("A01.txt","");
+            Solver.solveFromFile(fileName,"");
+
+        }
+
+        String file = "A10.txt";
+
+        System.out.println(file + "\n");
+
+
+        Solver.solveFromFile(file,"");
+
+
+        for(Integer i = 1; i < 10; i++){
+
+            String fileName = "";
+
+
+
+            fileName += "B1" + i.toString() + ".txt";
+
+            System.out.println(fileName + "\n");
+
+
+            Solver.solveFromFile(fileName,"");
+
+        }
+
+        String fileName = "B20.txt";
+
+        System.out.println(fileName + "\n");
+
+
+        Solver.solveFromFile(fileName,"");
+
+        for(Integer i = 1; i < 10; i++){
+
+            file = "";
+
+            file += "C2" + i.toString() + ".txt";
+
+            System.out.println(file + "\n");
+
+
+            Solver.solveFromFile(file,"");
+
+        }
+
+
+        for(Integer i = 0; i < 6; i++){
+
+            file = "";
+
+            file += "D3" + i.toString() + ".txt";
+
+            System.out.println(file + "\n");
+
+
+            Solver.solveFromFile(file,"");
 
         }
 
