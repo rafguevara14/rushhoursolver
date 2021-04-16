@@ -288,6 +288,9 @@ public class Solver {
 
                 }else{
 
+                    if(ClosedSet.containsKey(neighbour.hashCode()) && ClosedSet.get(neighbour.hashCode()).getF() > neighbour.getF() ) {
+                        ClosedSet.remove(neighbour.hashCode());
+                    }
 
                     OpenQueue.add(neighbour);
 

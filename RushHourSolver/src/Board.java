@@ -306,7 +306,7 @@ public class Board {
         while(i < 6){
 
             if(!getSquare(i,j).equals(".")) {
-                heuristic += i + 10000*Math.random(); //is the factor; closer to exit
+                heuristic += i; //is the factor; closer to exit
             }
 
             i++;
