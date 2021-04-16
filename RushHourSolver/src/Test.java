@@ -1,8 +1,39 @@
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Test {
 
     public static void main(String[] args) throws Exception {
+
+
+//
+//        HashMap<Integer, Byte> properties = new HashMap<Integer, Byte>();
+//
+//        properties.put()
+
+//        Byte x = 0b1000;
+//
+//        x = (byte) (x | (byte) ((5 - 3) + 1));
+//
+//        int length = (int) (0b0111 & x);
+//
+//
+//        System.out.println(length);
+//
+//
+////        System.out.println((x & 0b0011));
+//
+//        if((x&1000) != 0)
+//            System.out.println(true);
+//        else
+//
+//            System.out.println(false);
+//
+
+
+
+
 
 
         //java functions test
@@ -146,7 +177,7 @@ public class Test {
 
 
 
-
+//
 //        String file = "";
 //
 //            file += "D35.txt";
