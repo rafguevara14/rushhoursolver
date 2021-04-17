@@ -5,8 +5,6 @@ import java.util.*;
 
 public class Node implements Comparable<Node> {
 
-    //hello
-
     private int H;
     private int G;
     private int F;
@@ -15,10 +13,7 @@ public class Node implements Comparable<Node> {
 
     private int hashCode;
 
-//    private static HashSet<Node> allNodes = new HashSet<Node>();
-
     Board board;
-
 
     //compare only the state of the board
     @Override
@@ -36,11 +31,11 @@ public class Node implements Comparable<Node> {
     public int compareTo(Node o) {
         return Integer.compare(this.getF(),o.getF());
 
-//        return Integer.compare(o.getF(),this.getF());
-
-
     }
 
+    /* constructors */
+
+    //default
     Node(){
 
         this.board = null;
@@ -56,8 +51,8 @@ public class Node implements Comparable<Node> {
         this.hashCode = 0;
 
     }
-    //read from file
 
+    //read from file
     Node(String file) throws FileAlreadyExistsException, FileNotFoundException {
 
         this.board = new Board(file);
@@ -75,14 +70,13 @@ public class Node implements Comparable<Node> {
     }
 
     //creates a new Node from old board with one move executed
-
     Node(String currCar, int steps,Node oldNode){
 
         //create new Board
         this.board = new Board(currCar,steps, oldNode.board);
 
         //update H
-        this.H = this.board.getHeuristic(); //for now...
+        this.H = this.board.getHeuristic();
 
         //update G
         this.G = oldNode.getG()+1;
@@ -93,14 +87,11 @@ public class Node implements Comparable<Node> {
         this.parent = oldNode;
 
         this.hashCode = Arrays.deepHashCode(this.board.getMatrix());
-
     }
 
-    //getters
+    /* getters */
 
-    public int getG() {
-        return this.G;
-    }
+    public int getG() { return this.G; }
 
     public int getF() {
         return this.F;
@@ -109,153 +100,27 @@ public class Node implements Comparable<Node> {
     public int getH() {
         return this.H;
     }
+
     public String getMove(){ return this.board.getMove(); }
 
     public Board getBoard(){ return this.board; }
-
-    public void setParent(Node parent) { this.parent = parent; }
 
     public Node getParent(){
         return this.parent;
     }
 
+    public boolean isSolved(){ return this.board.isSolved(); }
 
+    /* setters */
 
+    public void setParent(Node parent) { this.parent = parent; }
 
-
-
-
-    public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
-
-        this.board = new Board(file);
-
-        int ROM[] = ROM(currCar,x,y);
-
-        System.out.println("ROM of " + currCar + " is [" + ROM[0] + "," + ROM[1] + "]\n");
-
-
-    }
-
-
-    public void print_neighbours(Node test){
-
-        this.board.print_matrix();
-
-//      test.generateNeighbours();
-//
-//        for(Node neighbour : this.getNeighbours()){
-//
-//            neighbour.board.print_matrix();
-//
-//            System.out.println(neighbour.board.getMove());
-//
-//
-//            System.out.println("\n");
-//        }
-//
-//
-//        System.out.println("Number of Neighbours: " + neighbours.size());
-
-
-    }
-
-    public static void generate_neighbours_test(String file) throws FileAlreadyExistsException, FileNotFoundException {
-
-        //some node to generate neighbours...read from file
-
-        Node test = new Node(file);
-
-        test.print_neighbours(test);
-
-
-
-    }
-
-    public boolean isSolved(){
-
-        return this.board.isSolved();
-    }
-
-    //Pre-condition: needs the leftmost/upmost coordinate of the given car
-
-    private int[] ROM(String currCar, int x, int y) {
-
-//        0 O..P..
-//        1 O..P..
-//        2 OXXP..
-//        3 ..AQQQ
-//        4 ..A..B
-//        5 ..RRRB
-
-        //[min,max]
-        int[] ROM = new int[2];
-
-
-        //leftmost/upmost coordinate of car
-        int xtmp = x;
-
-        int ytmp = y;
-
-        //Range of motion does not begin till after the first empty square
-        ROM[0] = 1;
-
-        //determine negative ROM
-        do{
-
-            ROM[0]--;
-
-            if(this.board.isVertical(currCar))
-                ytmp--;
-            else
-                xtmp--;
-
-            //edge case
-            if(!this.board.inBounds(currCar,xtmp,ytmp))
-                break;
-
-        }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
-
-
-        //reset coordinates (leftmost/upmost coordinate of car)
-        xtmp = x;
-        ytmp = y;
-
-        //get to right/downmost part of car
-        if(this.board.isVertical(currCar))
-
-            ytmp += this.board.getLength(currCar)-1;
-        else
-            xtmp += this.board.getLength(currCar)-1;
-
-
-        //Range of motion does not begin till after the first empty square
-        ROM[1] = -1;
-
-        //determine positive ROM
-        do{
-
-            ROM[1]++;
-
-            if(this.board.isVertical(currCar))
-                ytmp++;
-            else
-                xtmp++;
-
-            //edge case
-            if(!this.board.inBounds(currCar,xtmp,ytmp))
-                break;
-
-        }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
-
-        return ROM;
-
-    }//ROM function
+    /* main methods */
 
     //return all possible neighbours as an ArrayList of Nodes
-
     public ArrayList<Node> generateNeighbours() {
 
-        HashMap<Integer,String> visitedCars = new HashMap<>(); //closed set
+        HashMap<Integer,String> visitedCars = new HashMap<Integer,String>(); //closed set
 
         ArrayList<Node> neighbours = new ArrayList<Node>();
 
@@ -290,11 +155,118 @@ public class Node implements Comparable<Node> {
 
                     }//new car
                 }//car found
-            }//j
-        }//i (main for loop)
+            }//inner loop
+        }//outer loop
 
         return neighbours;
-//        this.neighbours = neighbours;
+    }
 
-    }//generate neighbours function
+    //Pre-condition: needs the leftmost/upmost coordinate of the given car
+    private int[] ROM(String currCar, int x, int y) {
+
+//        0 O..P..
+//        1 O..P..
+//        2 OXXP..
+//        3 ..AQQQ
+//        4 ..A..B
+//        5 ..RRRB
+
+        //[min,max]
+        int[] ROM = new int[2];
+
+        //leftmost/upmost coordinate of car
+        int xtmp = x;
+
+        int ytmp = y;
+
+        //Range of motion does not begin till after the first empty square
+        ROM[0] = 1;
+
+        //determine negative ROM
+        do{
+
+            ROM[0]--;
+
+            if(this.board.isVertical(currCar))
+                ytmp--;
+            else
+                xtmp--;
+
+            //edge case
+            if(!this.board.inBounds(currCar,xtmp,ytmp))
+                break;
+
+        }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
+
+        //reset coordinates (leftmost/upmost coordinate of car)
+        xtmp = x;
+        ytmp = y;
+
+        //get to right/downmost part of car
+        if(this.board.isVertical(currCar))
+
+            ytmp += this.board.getLength(currCar)-1;
+        else
+            xtmp += this.board.getLength(currCar)-1;
+
+        //Range of motion does not begin till after the first empty square
+        ROM[1] = -1;
+
+        //determine positive ROM
+        do{
+
+            ROM[1]++;
+
+            if(this.board.isVertical(currCar))
+                ytmp++;
+            else
+                xtmp++;
+
+            //edge case
+            if(!this.board.inBounds(currCar,xtmp,ytmp))
+                break;
+
+        }while(xtmp < 6 && ytmp < 6 && this.board.getSquare(xtmp,ytmp).equals("."));
+
+        return ROM;
+
+    }//ROM function
+
+    /* test functions */
+
+    public void ROMtest(String currCar, int x, int y, String file) throws FileAlreadyExistsException, FileNotFoundException {
+
+        this.board = new Board(file);
+
+        int ROM[] = ROM(currCar,x,y);
+
+        System.out.println("ROM of " + currCar + " is [" + ROM[0] + "," + ROM[1] + "]\n");
+    }
+
+    public void print_neighbours(Node test){
+
+        ArrayList<Node> neighbours = test.generateNeighbours();
+
+        for(Node neighbour : neighbours){
+
+            neighbour.board.print_matrix();
+
+            System.out.println(neighbour.board.getMove());
+
+
+            System.out.println("\n");
+        }
+
+        System.out.println("Number of Neighbours: " + neighbours.size());
+    }
+
+    public static void generate_neighbours_test(String file) throws FileAlreadyExistsException, FileNotFoundException {
+
+        //some node to generate neighbours...read from file
+
+        Node test = new Node(file);
+
+        test.print_neighbours(test);
+    }
+
 }//Node
