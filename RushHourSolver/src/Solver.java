@@ -53,7 +53,7 @@ public class Solver {
 
                     neighbour.setParent(currentNode);
 
-                    System.out.println("Found Solution!\n");
+//                    System.out.println("Found Solution!\n");
 
                     return neighbour;
 
