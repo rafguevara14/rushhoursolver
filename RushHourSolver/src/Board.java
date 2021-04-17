@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class Board {
 
-
     //use a Map instead and make the representation use bytes instead
     private String[][] matrix = new String[6][6];
 
@@ -43,17 +42,17 @@ public class Board {
         return ( 0b0111 & properties.get(key.hashCode()) );
     }
 
-    public boolean inBounds(String currCar,int x,int y){
-
-        return (x <= 5 && y <= 5 && x >= 0 && y >= 0);
-    }
-
     public boolean isVertical(String key){
 
         if(!properties.containsKey(key.hashCode()))
             throw new NoSuchElementException("That car does not exist within properties array\n");
 
         return ((0b1000 & properties.get(key.hashCode()) ) != 0);
+    }
+
+    public boolean inBounds(String currCar,int x,int y){
+
+        return (x <= 5 && y <= 5 && x >= 0 && y >= 0);
     }
 
     public boolean isSolved() {
@@ -69,24 +68,17 @@ public class Board {
 
         while(!getSquare(i,j).equals("X")){
             //traverse
-
             i++;
-
-
         }
 
         //take two steps
         i += 2;
 
-
         while(i < 6){
-
-            if(!getSquare(i,j).equals(".")) {
-                heuristic += i; //is the factor; closer to exit
-            }
+            if(!getSquare(i,j).equals("."))
+                heuristic += i; //i is the factor; closer to exit
 
             i++;
-
         }
 
         return heuristic;
@@ -102,15 +94,15 @@ public class Board {
     }
 
     /* constructors */
-    //constructs copy of old board with one move made
 
+    //constructs copy of old board with one move made
     Board(String currCar,int steps,Board oldBoard){
 
         //copy Matrix
         makeMove(currCar,steps,oldBoard);
     }
-    //reads from file
 
+    //reads from file
     Board(String inputpath) throws FileAlreadyExistsException, FileNotFoundException {
 
         //overwrite old properties; are in a new board
